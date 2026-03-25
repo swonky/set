@@ -1,6 +1,6 @@
 # set
 
-A small, idiomatic generic set implementation for Go.
+A lightweight generic set implementation for Go.
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/swonky/set.svg)](https://pkg.go.dev/github.com/swonky/set)
 
