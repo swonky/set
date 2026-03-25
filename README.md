@@ -12,7 +12,7 @@ A small, idiomatic generic Set for Go.
 ## Install
 
 ```bash
-go get github.com/you/set
+go get github.com/swonky/set
 ```
 
 ## Usage
