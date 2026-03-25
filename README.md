@@ -1,13 +1,16 @@
 # set
 
-A small, idiomatic generic Set for Go.
+A small, idiomatic generic set implementation for Go.
+
+[![Go Reference](https://pkg.go.dev/badge/github.com/swonky/set.svg)](https://pkg.go.dev/github.com/swonky/set)
 
 ## Features
 
-- `map[T]struct{}`-backed (O(1) operations)
-- Pure + mutating set operations (`Union`, `UnionInto`, etc.)
-- Predicate helpers (`Any`, `All`, `Find`)
-- Iterator support (`iter.Seq`)
+- Provides `Set`, a collection of unique comparable values.
+- Uses map[T]struct{} internally for constant-time add, remove, and membership checks.
+- Supports both non-mutating operations (returning new sets) and in-place variants.
+- Includes helpers for querying elements (e.g. Any, All, Find).
+- Supports on-demand iteration via `iter.Seq` without allocating intermediate slices.
 
 ## Install
 
