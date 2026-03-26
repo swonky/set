@@ -63,17 +63,41 @@ func (s Set[T]) SymmetricDiff(o Set[T]) Set[T] {
 	return s.Diff(o).Union(o.Diff(s))
 }
 
-// Add inserts one or more items into the set.
-func (s Set[T]) Add(items ...T) {
+// AddAll inserts one or more items into the set.
+func (s Set[T]) AddAll(items ...T) {
 	for _, item := range items {
 		s[item] = struct{}{}
 	}
+}
+
+// Add inserts an item into the set. Returns true if item was already present.
+func (s Set[T]) Add(item T) bool {
+	if s.Has(item) {
+		return true
+	}
+	s[item] = struct{}{}
+	return false
 }
 
 // Has reports whether the item is present.
 func (s Set[T]) Has(item T) bool {
 	_, ok := s[item]
 	return ok
+}
+
+// HasAny reports whether any of the item are present.
+func (s Set[T]) HasAny(item ...T) bool {
+	return slices.ContainsFunc(item, s.Has)
+}
+
+// HasAll reports whether all of the item are present.
+func (s Set[T]) HasAll(item ...T) bool {
+	for _, v := range item {
+		if !s.Has(v) {
+			return false
+		}
+	}
+	return true
 }
 
 // Delete removes an item from the set.
