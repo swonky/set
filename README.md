@@ -1,16 +1,15 @@
 # set
 
-A lightweight generic set implementation for Go.
+Package set provides a generic `Set` type for working with unordered collections of unique, comparable values.
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/swonky/set.svg)](https://pkg.go.dev/github.com/swonky/set)
 
 ## Features
 
-- Provides `Set`, a collection of unique comparable values.
-- Uses map[T]struct{} internally for constant-time add, remove, and membership checks.
-- Supports both non-mutating operations (returning new sets) and in-place variants.
-- Includes helpers for querying elements (e.g. Any, All, Find).
-- Supports on-demand iteration via `iter.Seq` without allocating intermediate slices.
+- Supports both non-mutating (returning new sets) and mutating (in-place) operations.
+- Includes helpers for querying elements (eg. `Any`, `All`, `Find`).
+- Includes functional helpers (eg. `Reduce`, `ReduceWhile`, `ReduceTry`)
+- Supports iterator patterns via `iter.Seq` without allocating intermediate slices (eg. `Collect`, `Chain`, `Accumulate`, `AccumulateTry`).
 
 ## Install
 

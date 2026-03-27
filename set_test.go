@@ -1,11 +1,34 @@
 package set_test
 
 import (
+	"iter"
 	"slices"
 	"testing"
 
 	"github.com/swonky/set"
 )
+
+func seqOf[T any](xs ...T) iter.Seq[T] {
+	return func(yield func(T) bool) {
+		for _, x := range xs {
+			if !yield(x) {
+				return
+			}
+		}
+	}
+}
+
+func setEq[T comparable](t *testing.T, got, want set.Set[T]) {
+	t.Helper()
+	if got.Len() != want.Len() {
+		t.Fatalf("len mismatch: got=%d want=%d", got.Len(), want.Len())
+	}
+	for v := range want.Iter() {
+		if !got.Has(v) {
+			t.Fatalf("missing element: %v", v)
+		}
+	}
+}
 
 func TestNew(t *testing.T) {
 	s := set.New(1, 2, 2, 3)
@@ -18,7 +41,7 @@ func TestNew(t *testing.T) {
 func TestFromIter(t *testing.T) {
 	src := []int{1, 2, 2, 3}
 
-	s := set.FromIter(slices.Values(src))
+	s := set.Collect(slices.Values(src))
 
 	if s.Len() != 3 {
 		t.Fatalf("expected len=3, got %d", s.Len())
@@ -47,12 +70,12 @@ func TestUnionInto(t *testing.T) {
 	}
 }
 
-func TestUnionAll(t *testing.T) {
+func TestUnionFn(t *testing.T) {
 	a := set.New(1)
 	b := set.New(2)
 	c := set.New(3)
 
-	r := set.UnionAll(a, b, c)
+	r := set.Union(a, b, c)
 
 	if !r.Equal(set.New(1, 2, 3)) {
 		t.Fatalf("unexpected result: %v", r)
@@ -70,12 +93,12 @@ func TestIntersect(t *testing.T) {
 	}
 }
 
-func TestIntersectAll(t *testing.T) {
+func TestIntersectFn(t *testing.T) {
 	a := set.New(1, 2, 3)
 	b := set.New(2, 3)
 	c := set.New(3)
 
-	r := set.IntersectAll(a, b, c)
+	r := set.Intersect(a, b, c)
 
 	if !r.Equal(set.New(3)) {
 		t.Fatalf("unexpected result: %v", r)
@@ -104,10 +127,30 @@ func TestSymmetricDiff(t *testing.T) {
 	}
 }
 
-func TestAdd(t *testing.T) {
+func TestAddCheck(t *testing.T) {
 	s := set.New[int]()
 
-	s.Add(1, 2, 2)
+	if found := s.AddCheck(1); found {
+		t.Fatalf("expected found==false, got true")
+	}
+
+	if found := s.AddCheck(2); found {
+		t.Fatalf("expected found==false, got true")
+	}
+
+	if found := s.AddCheck(2); !found {
+		t.Fatalf("expected found==true, got false")
+	}
+
+	if s.Len() != 2 {
+		t.Fatalf("expected len=2, got %d", s.Len())
+	}
+}
+
+func TestAddAll(t *testing.T) {
+	s := set.New[int]()
+
+	s.AddAll(1, 2, 2)
 
 	if s.Len() != 2 {
 		t.Fatalf("expected len=2, got %d", s.Len())
@@ -285,5 +328,152 @@ func TestFirst(t *testing.T) {
 	_, ok = s.First()
 	if ok {
 		t.Fatalf("expected empty")
+	}
+}
+
+func TestCollect(t *testing.T) {
+	s := set.Collect(seqOf(1, 2, 2, 3))
+	setEq(t, s, set.New(1, 2, 3))
+}
+
+func TestAccumulate(t *testing.T) {
+	a := set.New(1, 2)
+	b := set.New(2, 3)
+	c := set.New(3, 4)
+
+	var results []set.Set[int]
+	for v := range set.Accumulate(
+		[]set.Set[int]{a, b, c},
+		func(x, y set.Set[int]) set.Set[int] {
+			return x.Union(y)
+		},
+	) {
+		results = append(results, v)
+	}
+
+	if len(results) != 2 {
+		t.Fatalf("expected 2 results, got %d: %v", len(results), results)
+	}
+
+	setEq(t, results[0], set.New(1, 2, 3))
+	setEq(t, results[1], set.New(1, 2, 3, 4))
+}
+
+func TestAccumulateWhileStops(t *testing.T) {
+	a := set.New(1)
+	b := set.New(2)
+	c := set.New(3)
+
+	count := 0
+	for range set.AccumulateTry([]set.Set[int]{a, b, c},
+		func(x, y set.Set[int]) (set.Set[int], bool) {
+			count++
+			return x.Union(y), false
+		},
+	) {
+	}
+
+	if count != 1 {
+		t.Fatalf("expected early stop after 1 step, got %d", count)
+	}
+}
+
+func TestReduce(t *testing.T) {
+	a := set.New(1)
+	b := set.New(2)
+	c := set.New(3)
+
+	got := set.Reduce([]set.Set[int]{a, b, c},
+		func(x, y set.Set[int]) set.Set[int] {
+			return x.Union(y)
+		},
+	)
+
+	setEq(t, got, set.New(1, 2, 3))
+}
+
+func TestReduceEmpty(t *testing.T) {
+	got := set.Reduce[int](nil,
+		func(x, y set.Set[int]) set.Set[int] { return x },
+	)
+	if !got.IsEmpty() {
+		t.Fatalf("expected empty set")
+	}
+}
+
+func TestReduceTryStops(t *testing.T) {
+	a := set.New(1)
+	b := set.New(2)
+	c := set.New(3)
+
+	count := 0
+	got := set.ReduceTry([]set.Set[int]{a, b, c},
+		func(x, y set.Set[int]) (set.Set[int], bool) {
+			count++
+			return x.Union(y), count < 2
+		},
+	)
+
+	setEq(t, got, set.New(1, 2, 3))
+	if count != 2 {
+		t.Fatalf("expected 2 steps, got %d", count)
+	}
+}
+
+func TestReduceWhileStops(t *testing.T) {
+	a := set.New(1)
+	b := set.New(2)
+	c := set.New(3)
+
+	got := set.ReduceWhile(
+		[]set.Set[int]{a, b, c},
+		func(x, y set.Set[int]) set.Set[int] { return x.Union(y) },
+		func(s set.Set[int]) bool { return s.Len() < 3 },
+	)
+
+	setEq(t, got, set.New(1, 2, 3))
+}
+
+func TestIntersectEarlyEmpty(t *testing.T) {
+	got := set.Intersect(
+		set.New(1),
+		set.New(2),
+		set.New(3),
+	)
+	if !got.IsEmpty() {
+		t.Fatalf("expected empty intersection")
+	}
+}
+
+func TestUnionIter(t *testing.T) {
+	a := set.New(1, 2)
+	b := set.New(2, 3)
+	c := set.New(3, 4)
+
+	var out []int
+	for v := range set.UnionIter(a, b, c) {
+		out = append(out, v)
+	}
+
+	setEq(t, set.New(out...), set.New(1, 2, 3, 4))
+}
+
+func TestUnionIterOrder(t *testing.T) {
+	a := set.New(1, 2)
+	b := set.New(2, 3)
+
+	var out []int
+	for v := range set.UnionIter(a, b) {
+		out = append(out, v)
+	}
+
+	expected := []int{1, 2, 3}
+	if len(out) != len(expected) {
+		t.Fatalf("length mismatch: got=%v want=%v", out, expected)
+	}
+	for i := range expected {
+		if out[i] != expected[i] {
+			t.Fatalf("order mismatch: got=%v want=%v", out, expected)
+		}
 	}
 }

@@ -2,8 +2,8 @@ package set
 
 import "iter"
 
-// New creates a new Set containing the provided items.
-// If no items are provided, returns an empty set.
+// New returns a new Set containing the provided items.
+// If no items are provided, it returns an empty set.
 func New[T comparable](items ...T) Set[T] {
 	s := make(Set[T], len(items))
 	for _, item := range items {
@@ -12,9 +12,9 @@ func New[T comparable](items ...T) Set[T] {
 	return s
 }
 
-// FromIter creates a new Set from an iterator sequence.
-// An optional capacity hint may be provided to reduce reallocations.
-func FromIter[T comparable](it iter.Seq[T], capacity ...int) Set[T] {
+// Collect returns a new Set containing all elements produced by the iterator.
+// If a positive capacity hint is provided, it is used to preallocate the set.
+func Collect[T comparable](it iter.Seq[T], capacity ...int) Set[T] {
 	var s Set[T]
 	if len(capacity) > 0 && capacity[0] > 0 {
 		s = make(Set[T], capacity[0])
@@ -27,32 +27,86 @@ func FromIter[T comparable](it iter.Seq[T], capacity ...int) Set[T] {
 	return s
 }
 
-// UnionAll returns a new Set containing all elements from the provided sets.
-func UnionAll[T comparable](sets ...Set[T]) Set[T] {
-	switch len(sets) {
-	case 0:
-		return New[T]()
-	case 1:
-		return sets[0].Clone()
-	}
-	r := sets[0].Clone()
-	for _, s := range sets[1:] {
-		r = r.Union(s)
-	}
-	return r
+// Clone returns a shallow copy of the set.
+func Clone[T comparable](s Set[T]) Set[T] {
+	return s.Clone()
 }
 
-// IntersectAll returns a new Set containing elements present in ALL input sets.
-func IntersectAll[T comparable](sets ...Set[T]) Set[T] {
-	if len(sets) == 0 {
-		return New[T]()
-	}
-	r := sets[0].Clone()
-	for _, s := range sets[1:] {
-		r = r.Intersect(s)
-		if r.IsEmpty() {
-			break
+// Specific reducer functions
+
+// Union returns a new Set containing all elements from the provided sets.
+func Union[T comparable](sets ...Set[T]) Set[T] {
+	return Reduce(sets, func(a, b Set[T]) Set[T] { return a.Union(b) })
+}
+
+// Intersect returns a new Set containing elements present in all input sets.
+// Evaluation stops early if the result becomes empty.
+func Intersect[T comparable](sets ...Set[T]) Set[T] {
+	return ReduceTry(
+		sets,
+		func(a, b Set[T]) (Set[T], bool) {
+			r := a.Intersect(b)
+			return r, !r.IsEmpty()
+		},
+	)
+}
+
+// UnionIter returns an iterator of unique elements from the provided sets,
+// preserving first occurrence order across sets.
+func UnionIter[T comparable](sets ...Set[T]) iter.Seq[T] {
+	return func(yield func(T) bool) {
+		seen := New[T]()
+		for _, s := range sets {
+			for e := range s.Iter() {
+				if _, exists := seen[e]; !exists {
+					seen[e] = struct{}{}
+					if !yield(e) {
+						return
+					}
+				}
+			}
 		}
 	}
-	return r
+}
+
+// IntersectIter returns a lazy sequence of elements present in all provided sets.
+// It iterates the smallest input set and yields elements that exist in every other set.
+// Iteration stops early if the consumer returns false.
+//
+// No intermediate sets are allocated. Membership checks are performed on demand.
+// For zero sets, the sequence yields nothing.
+func IntersectIter[T comparable](sets ...Set[T]) iter.Seq[T] {
+	return func(yield func(T) bool) {
+		if len(sets) == 0 {
+			return
+		}
+
+		// Find smallest set index
+		smallestIdx := 0
+		for i := 1; i < len(sets); i++ {
+			if len(sets[i]) < len(sets[smallestIdx]) {
+				smallestIdx = i
+			}
+		}
+
+		smallest := sets[smallestIdx]
+
+		for k := range smallest {
+			ok := true
+			for i, s := range sets {
+				if i == smallestIdx {
+					continue
+				}
+				if _, exists := s[k]; !exists {
+					ok = false
+					break
+				}
+			}
+			if ok {
+				if !yield(k) {
+					return
+				}
+			}
+		}
+	}
 }

@@ -14,9 +14,11 @@ import (
 // The zero value is ready to use but prefer using New() for initialization.
 type Set[T comparable] map[T]struct{}
 
-// Union returns a new Set containing all elements from both sets.
+// Union returns a new set containing all elements from s and o.
+// It clones the smaller set and inserts elements from the larger,
+// minimizing total copy and insert work.
 func (s Set[T]) Union(o Set[T]) Set[T] {
-	if len(o) > len(s) {
+	if len(s) > len(o) {
 		s, o = o, s
 	}
 	r := s.Clone()
@@ -26,25 +28,73 @@ func (s Set[T]) Union(o Set[T]) Set[T] {
 	return r
 }
 
-// UnionInto inserts all elements from the other set into this set.
+// UnionInto inserts all elements from o into s in place.
+// It performs a single pass over o with no allocations.
 func (s Set[T]) UnionInto(o Set[T]) {
 	for k := range o {
 		s[k] = struct{}{}
 	}
 }
 
-// Intersect returns a new Set containing elements present in both sets.
+// UnionIter returns a lazy sequence of elements from the larger set,
+// followed by elements from the smaller set not already present.
+// Membership checks are performed against the smaller set to reduce probes.
+// No intermediate state is allocated.
+func (s Set[T]) UnionIter(o Set[T]) iter.Seq[T] {
+	large, small := s, o
+	if len(large) < len(small) {
+		large, small = small, large
+	}
+
+	return func(yield func(T) bool) {
+		for k := range large {
+			if !yield(k) {
+				return
+			}
+		}
+		for k := range small {
+			if _, exists := large[k]; !exists {
+				if !yield(k) {
+					return
+				}
+			}
+		}
+	}
+}
+
+// Intersect returns a new set containing elements present in both s and o.
+// It iterates the smaller set and allocates only for actual matches.
 func (s Set[T]) Intersect(o Set[T]) Set[T] {
 	if len(s) > len(o) {
 		s, o = o, s
 	}
-	out := make(Set[T], len(s))
+	out := make(Set[T])
 	for k := range s {
 		if _, ok := o[k]; ok {
 			out[k] = struct{}{}
 		}
 	}
 	return out
+}
+
+// IntersectIter returns a lazy sequence of elements present in both s and o.
+// The smaller set is selected before iteration to avoid branching in the hot path.
+// No intermediate set is allocated and iteration may stop early.
+func (s Set[T]) IntersectIter(o Set[T]) iter.Seq[T] {
+	small, large := s, o
+	if len(small) > len(large) {
+		small, large = large, small
+	}
+
+	return func(yield func(T) bool) {
+		for k := range small {
+			if _, exists := large[k]; exists {
+				if !yield(k) {
+					return
+				}
+			}
+		}
+	}
 }
 
 // Diff returns elements in s but not in o.
@@ -63,17 +113,46 @@ func (s Set[T]) SymmetricDiff(o Set[T]) Set[T] {
 	return s.Diff(o).Union(o.Diff(s))
 }
 
-// Add inserts one or more items into the set.
-func (s Set[T]) Add(items ...T) {
+// AddAll inserts one or more items into the set.
+func (s Set[T]) AddAll(items ...T) {
 	for _, item := range items {
 		s[item] = struct{}{}
 	}
+}
+
+// Add inserts an item into the set.
+func (s Set[T]) Add(item T) {
+	s[item] = struct{}{}
+}
+
+// AddCheck inserts an item into the set. Returns true if item was already present.
+func (s Set[T]) AddCheck(item T) bool {
+	if s.Has(item) {
+		return true
+	}
+	s.Add(item)
+	return false
 }
 
 // Has reports whether the item is present.
 func (s Set[T]) Has(item T) bool {
 	_, ok := s[item]
 	return ok
+}
+
+// HasAny reports whether any of the item are present.
+func (s Set[T]) HasAny(item ...T) bool {
+	return slices.ContainsFunc(item, s.Has)
+}
+
+// HasAll reports whether all of the item are present.
+func (s Set[T]) HasAll(item ...T) bool {
+	for _, v := range item {
+		if !s.Has(v) {
+			return false
+		}
+	}
+	return true
 }
 
 // Delete removes an item from the set.
