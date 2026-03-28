@@ -1,5 +1,5 @@
-// Package set provides a generic Set type and operations for working with sets of comparable elements.
-// A Set is implemented as a map[T]struct{} for memory efficiency and O(1) average-case operations.
+// Package set provides a generic set type and operations for working with sets of comparable elements.
+// A set is implemented as a map[T]struct{} for memory efficiency and O(1) average-case operations.
 package set
 
 import (
@@ -10,9 +10,13 @@ import (
 	"strings"
 )
 
-// Set represents a mathematical set of comparable elements.
+// set represents a mathematical set of comparable elements.
 // The zero value is ready to use but prefer using New() for initialization.
 type Set[T comparable] map[T]struct{}
+
+func (s Set[T]) Freeze() FrozenSet[T] {
+	return FrozenSet[T]{s: maps.Clone(s)}
+}
 
 // Union returns a new set containing all elements from s and o.
 // It clones the smaller set and inserts elements from the larger,
@@ -26,14 +30,6 @@ func (s Set[T]) Union(o Set[T]) Set[T] {
 		r[k] = struct{}{}
 	}
 	return r
-}
-
-// UnionInto inserts all elements from o into s in place.
-// It performs a single pass over o with no allocations.
-func (s Set[T]) UnionInto(o Set[T]) {
-	for k := range o {
-		s[k] = struct{}{}
-	}
 }
 
 // UnionIter returns a lazy sequence of elements from the larger set,
@@ -108,30 +104,9 @@ func (s Set[T]) Diff(o Set[T]) Set[T] {
 	return out
 }
 
-// SymmetricDiff returns elements in either set but not both.
-func (s Set[T]) SymmetricDiff(o Set[T]) Set[T] {
+// SymDiff returns elements in either set but not both.
+func (s Set[T]) SymDiff(o Set[T]) Set[T] {
 	return s.Diff(o).Union(o.Diff(s))
-}
-
-// AddAll inserts one or more items into the set.
-func (s Set[T]) AddAll(items ...T) {
-	for _, item := range items {
-		s[item] = struct{}{}
-	}
-}
-
-// Add inserts an item into the set.
-func (s Set[T]) Add(item T) {
-	s[item] = struct{}{}
-}
-
-// AddCheck inserts an item into the set. Returns true if item was already present.
-func (s Set[T]) AddCheck(item T) bool {
-	if s.Has(item) {
-		return true
-	}
-	s.Add(item)
-	return false
 }
 
 // Has reports whether the item is present.
@@ -153,28 +128,6 @@ func (s Set[T]) HasAll(item ...T) bool {
 		}
 	}
 	return true
-}
-
-// Delete removes an item from the set.
-func (s Set[T]) Delete(item T) {
-	delete(s, item)
-}
-
-// Pop removes and returns an arbitrary element.
-func (s Set[T]) Pop() (T, bool) {
-	for k := range s {
-		delete(s, k)
-		return k, true
-	}
-	var zero T
-	return zero, false
-}
-
-// Clear removes all elements.
-func (s Set[T]) Clear() {
-	for k := range s {
-		delete(s, k)
-	}
 }
 
 // Clone returns a shallow copy.
@@ -276,6 +229,57 @@ func (s Set[T]) Find(fn func(T) bool) (T, bool) {
 // First returns an arbitrary element.
 func (s Set[T]) First() (T, bool) {
 	for k := range s {
+		return k, true
+	}
+	var zero T
+	return zero, false
+}
+
+// UnionInto inserts all elements from o into s in place.
+// It performs a single pass over o with no allocations.
+func (s Set[T]) UnionInto(o Set[T]) {
+	for k := range o {
+		s[k] = struct{}{}
+	}
+}
+
+// AddAll inserts one or more items into the set.
+func (s Set[T]) AddAll(items ...T) {
+	for _, item := range items {
+		s[item] = struct{}{}
+	}
+}
+
+// Add inserts an item into the set.
+func (s Set[T]) Add(item T) {
+	s[item] = struct{}{}
+}
+
+// AddCheck inserts an item into the set. Returns true if item was already present.
+func (s Set[T]) AddCheck(item T) bool {
+	if s.Has(item) {
+		return true
+	}
+	s.Add(item)
+	return false
+}
+
+// Clear removes all elements.
+func (s Set[T]) Clear() {
+	for k := range s {
+		delete(s, k)
+	}
+}
+
+// Delete removes an item from the set.
+func (s Set[T]) Delete(item T) {
+	delete(s, item)
+}
+
+// Pop removes and returns an arbitrary element.
+func (s Set[T]) Pop() (T, bool) {
+	for k := range s {
+		delete(s, k)
 		return k, true
 	}
 	var zero T

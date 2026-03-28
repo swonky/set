@@ -116,11 +116,11 @@ func TestDiff(t *testing.T) {
 	}
 }
 
-func TestSymmetricDiff(t *testing.T) {
+func TestSymDiff(t *testing.T) {
 	a := set.New(1, 2)
 	b := set.New(2, 3)
 
-	r := a.SymmetricDiff(b)
+	r := a.SymDiff(b)
 
 	if !r.Equal(set.New(1, 3)) {
 		t.Fatalf("unexpected result: %v", r)

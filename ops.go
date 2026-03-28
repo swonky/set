@@ -2,6 +2,21 @@ package set
 
 import "iter"
 
+type SetLike[T comparable] interface {
+	All(fn func(T) bool) bool
+	Any(fn func(T) bool) bool
+	AsSlice() []T
+	Find(fn func(T) bool) (T, bool)
+	First() (T, bool)
+	Has(item T) bool
+	HasAll(item ...T) bool
+	HasAny(item ...T) bool
+	IsEmpty() bool
+	Iter() iter.Seq[T]
+	Len() int
+	String() string
+}
+
 // New returns a new Set containing the provided items.
 // If no items are provided, it returns an empty set.
 func New[T comparable](items ...T) Set[T] {
@@ -12,15 +27,19 @@ func New[T comparable](items ...T) Set[T] {
 	return s
 }
 
+// Make returns a new Set with a .
+// If no items are provided, it returns an empty set.
+func Make[T comparable](size ...int) Set[T] {
+	if len(size) > 0 && size[0] > 0 {
+		return make(Set[T], size[0])
+	}
+	return make(Set[T], 0)
+}
+
 // Collect returns a new Set containing all elements produced by the iterator.
 // If a positive capacity hint is provided, it is used to preallocate the set.
-func Collect[T comparable](it iter.Seq[T], capacity ...int) Set[T] {
-	var s Set[T]
-	if len(capacity) > 0 && capacity[0] > 0 {
-		s = make(Set[T], capacity[0])
-	} else {
-		s = make(Set[T])
-	}
+func Collect[T comparable](it iter.Seq[T], size ...int) Set[T] {
+	s := Make[T](size...)
 	for v := range it {
 		s[v] = struct{}{}
 	}
@@ -53,7 +72,7 @@ func Intersect[T comparable](sets ...Set[T]) Set[T] {
 
 // UnionIter returns an iterator of unique elements from the provided sets,
 // preserving first occurrence order across sets.
-func UnionIter[T comparable](sets ...Set[T]) iter.Seq[T] {
+func UnionIter[T comparable](sets ...SetLike[T]) iter.Seq[T] {
 	return func(yield func(T) bool) {
 		seen := New[T]()
 		for _, s := range sets {
@@ -75,7 +94,7 @@ func UnionIter[T comparable](sets ...Set[T]) iter.Seq[T] {
 //
 // No intermediate sets are allocated. Membership checks are performed on demand.
 // For zero sets, the sequence yields nothing.
-func IntersectIter[T comparable](sets ...Set[T]) iter.Seq[T] {
+func IntersectIter[T comparable](sets ...SetLike[T]) iter.Seq[T] {
 	return func(yield func(T) bool) {
 		if len(sets) == 0 {
 			return
@@ -84,20 +103,20 @@ func IntersectIter[T comparable](sets ...Set[T]) iter.Seq[T] {
 		// Find smallest set index
 		smallestIdx := 0
 		for i := 1; i < len(sets); i++ {
-			if len(sets[i]) < len(sets[smallestIdx]) {
+			if sets[i].Len() < sets[smallestIdx].Len() {
 				smallestIdx = i
 			}
 		}
 
 		smallest := sets[smallestIdx]
 
-		for k := range smallest {
+		for k := range smallest.Iter() {
 			ok := true
 			for i, s := range sets {
 				if i == smallestIdx {
 					continue
 				}
-				if _, exists := s[k]; !exists {
+				if s.Has(k) {
 					ok = false
 					break
 				}
