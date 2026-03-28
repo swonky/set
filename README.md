@@ -6,10 +6,10 @@ Package set provides a generic `Set` type for working with unordered collections
 
 ## Features
 
-- Supports both non-mutating (returning new sets) and mutating (in-place) operations.
-- Includes helpers for querying elements (eg. `Any`, `All`, `Find`).
-- Includes functional helpers (eg. `Reduce`, `ReduceWhile`, `ReduceTry`)
-- Supports iterator patterns via `iter.Seq` without allocating intermediate slices (eg. `Collect`, `Chain`, `Accumulate`, `AccumulateTry`).
+- Three set types: `Set[T]` (mutable), `FrozenSet[T]` (immutable), `SyncSet[T]` (thread-safe mutable).
+- Supports lazy iteration using Go 1.22+ `iter` package.
+- Composable set operations using reducers and accumulation patterns (`set.Reduce`, `set.Accumulate`).
+- Shared `set.SetLike` interface enabling interoperability across set types.
 
 ## Install
 
