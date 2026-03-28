@@ -116,7 +116,7 @@ func IntersectIter[T comparable](sets ...SetLike[T]) iter.Seq[T] {
 				if i == smallestIdx {
 					continue
 				}
-				if s.Has(k) {
+				if !s.Has(k) {
 					ok = false
 					break
 				}
