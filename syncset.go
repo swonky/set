@@ -12,8 +12,6 @@ var _ SetLike[int] = (*SyncSet[int])(nil)
 // All operations are guarded by a RWMutex.
 // Iteration holds a read lock for the duration of the sequence.
 type SyncSet[T comparable] struct {
-	SetLike[T]
-
 	mu sync.RWMutex
 	s  Set[T]
 }
@@ -158,13 +156,23 @@ func (ss *SyncSet[T]) Iter() iter.Seq[T] {
 	}
 }
 
-// UnionInto inserts all elements from o into ss.
 func (ss *SyncSet[T]) UnionInto(o *SyncSet[T]) {
-	o.mu.RLock()
-	ss.mu.Lock()
+	if ss == o {
+		return
+	}
+
+	if uintptr(unsafe.Pointer(ss)) < uintptr(unsafe.Pointer(o)) {
+		ss.mu.Lock()
+		o.mu.RLock()
+	} else {
+		o.mu.RLock()
+		ss.mu.Lock()
+	}
+
 	for k := range o.s {
 		ss.s[k] = struct{}{}
 	}
+
 	ss.mu.Unlock()
 	o.mu.RUnlock()
 }

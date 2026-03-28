@@ -12,7 +12,7 @@ func (fs FrozenSet[T]) All(fn func(T) bool) bool                 { return fs.s.A
 func (fs FrozenSet[T]) Any(fn func(T) bool) bool                 { return fs.s.Any(fn) }
 func (fs FrozenSet[T]) AsSet() Set[T]                            { return fs.s.Clone() }
 func (fs FrozenSet[T]) AsSlice() []T                             { return fs.s.AsSlice() }
-func (fs FrozenSet[T]) Clone() FrozenSet[T]                      { return fs.s.Clone().Freeze() }
+func (fs FrozenSet[T]) Clone() FrozenSet[T]                      { return FrozenSet[T]{s: fs.s.Clone()} }
 func (fs FrozenSet[T]) Diff(o FrozenSet[T]) FrozenSet[T]         { return fs.s.Diff(o.s).Freeze() }
 func (fs FrozenSet[T]) Equal(o FrozenSet[T]) bool                { return fs.s.Equal(o.s) }
 func (fs FrozenSet[T]) Filter(fn func(T) bool) FrozenSet[T]      { return fs.s.Filter(fn).Freeze() }
