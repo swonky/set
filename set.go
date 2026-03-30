@@ -10,6 +10,8 @@ import (
 	"strings"
 )
 
+var _ SetLike[int] = Set[int]{}
+
 // set represents a mathematical set of comparable elements.
 // The zero value is ready to use but prefer using New() for initialization.
 type Set[T comparable] map[T]struct{}
@@ -64,7 +66,7 @@ func (s Set[T]) Intersect(o Set[T]) Set[T] {
 	if len(s) > len(o) {
 		s, o = o, s
 	}
-	out := make(Set[T])
+	out := make(Set[T], len(s))
 	for k := range s {
 		if _, ok := o[k]; ok {
 			out[k] = struct{}{}
@@ -165,14 +167,22 @@ func (s Set[T]) Equal(o Set[T]) bool {
 	return len(s) == len(o) && s.IsSubsetOf(o)
 }
 
-// Iter returns an iterator over the set.
-func (s Set[T]) Iter() iter.Seq[T] {
-	return maps.Keys(s)
+// Range
+func (s Set[T]) Range(yield func(T) bool) {
+	for k := range s {
+		if !yield(k) {
+			return
+		}
+	}
 }
 
 // AsSlice returns elements as a slice.
 func (s Set[T]) AsSlice() []T {
-	return slices.Collect(s.Iter())
+	out := make([]T, 0, len(s))
+	for k := range s {
+		out = append(out, k)
+	}
+	return out
 }
 
 // String returns a string representation.
@@ -234,6 +244,25 @@ func (s Set[T]) First() (T, bool) {
 	var zero T
 	return zero, false
 }
+
+// Partition
+func (s Set[T]) Partition(pred func(T) bool) (Set[T], Set[T]) {
+	if pred == nil {
+		panic("nil predicate")
+	}
+	a := make(Set[T], len(s)/2)
+	b := make(Set[T], len(s)/2)
+	for k := range s {
+		if pred(k) {
+			a[k] = struct{}{}
+		} else {
+			b[k] = struct{}{}
+		}
+	}
+	return a, b
+}
+
+// Mutable operations
 
 // UnionInto inserts all elements from o into s in place.
 // It performs a single pass over o with no allocations.

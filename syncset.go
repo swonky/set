@@ -245,6 +245,16 @@ func (ss *SyncSet[T]) String() string {
 	return ss.s.String()
 }
 
+func (s *SyncSet[T]) Range(fn func(T) bool) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	for k := range s.s {
+		if !fn(k) {
+			return
+		}
+	}
+}
+
 func lock2[T comparable](a, b *SyncSet[T]) {
 	if a == b {
 		a.mu.RLock()

@@ -8,6 +8,15 @@ import (
 	"github.com/swonky/set"
 )
 
+func collect[T comparable](it iter.Seq[T]) set.Set[T] {
+	out := make(set.Set[T])
+	it(func(v T) bool {
+		out[v] = struct{}{}
+		return true
+	})
+	return out
+}
+
 func seqOf[T any](xs ...T) iter.Seq[T] {
 	return func(yield func(T) bool) {
 		for _, x := range xs {
@@ -23,11 +32,19 @@ func setEq[T comparable](t *testing.T, got, want set.Set[T]) {
 	if got.Len() != want.Len() {
 		t.Fatalf("len mismatch: got=%d want=%d", got.Len(), want.Len())
 	}
-	for v := range want.Iter() {
+	for v := range want.Range {
 		if !got.Has(v) {
 			t.Fatalf("missing element: %v", v)
 		}
 	}
+}
+
+func asSetLike[T comparable](xs []set.Set[T]) []set.SetLike[T] {
+	out := make([]set.SetLike[T], len(xs))
+	for i := range xs {
+		out[i] = xs[i]
+	}
+	return out
 }
 
 func TestNew(t *testing.T) {

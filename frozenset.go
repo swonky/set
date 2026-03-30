@@ -26,9 +26,17 @@ func (fs FrozenSet[T]) IntersectIter(o FrozenSet[T]) iter.Seq[T] { return fs.s.I
 func (fs FrozenSet[T]) IsEmpty() bool                            { return fs.s.IsEmpty() }
 func (fs FrozenSet[T]) IsSubsetOf(o FrozenSet[T]) bool           { return fs.s.IsSubsetOf(o.s) }
 func (fs FrozenSet[T]) IsSupersetOf(o FrozenSet[T]) bool         { return fs.s.IsSupersetOf(o.s) }
-func (fs FrozenSet[T]) Iter() iter.Seq[T]                        { return fs.s.Iter() }
 func (fs FrozenSet[T]) Len() int                                 { return fs.s.Len() }
 func (fs FrozenSet[T]) String() string                           { return fs.s.String() }
 func (fs FrozenSet[T]) SymDiff(o FrozenSet[T]) FrozenSet[T]      { return fs.s.SymDiff(o.s).Freeze() }
 func (fs FrozenSet[T]) Union(o FrozenSet[T]) FrozenSet[T]        { return fs.s.Union(o.s).Freeze() }
 func (fs FrozenSet[T]) UnionIter(o FrozenSet[T]) iter.Seq[T]     { return fs.s.UnionIter(o.s) }
+
+// Range
+func (fs FrozenSet[T]) Range(yield func(T) bool) {
+	for k := range fs.s {
+		if !yield(k) {
+			return
+		}
+	}
+}
