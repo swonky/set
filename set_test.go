@@ -47,6 +47,22 @@ func asSetLike[T comparable](xs []set.Set[T]) []set.SetLike[T] {
 	return out
 }
 
+func frozenAsSetLike[T comparable](xs []set.FrozenSet[T]) []set.SetLike[T] {
+	out := make([]set.SetLike[T], len(xs))
+	for i := range xs {
+		out[i] = xs[i]
+	}
+	return out
+}
+
+func syncAsSetLike[T comparable](xs []*set.SyncSet[T]) []set.SetLike[T] {
+	out := make([]set.SetLike[T], len(xs))
+	for i := range xs {
+		out[i] = xs[i]
+	}
+	return out
+}
+
 func TestNew(t *testing.T) {
 	s := set.New(1, 2, 2, 3)
 

@@ -12,7 +12,7 @@ import (
 
 var _ SetLike[int] = Set[int]{}
 
-// set represents a mathematical set of comparable elements.
+// Set[T] represents a mathematical set of comparable elements.
 // The zero value is ready to use but prefer using New() for initialization.
 type Set[T comparable] map[T]struct{}
 
@@ -21,8 +21,6 @@ func (s Set[T]) Freeze() FrozenSet[T] {
 }
 
 // Union returns a new set containing all elements from s and o.
-// It clones the smaller set and inserts elements from the larger,
-// minimizing total copy and insert work.
 func (s Set[T]) Union(o Set[T]) Set[T] {
 	if len(s) > len(o) {
 		s, o = o, s
@@ -60,8 +58,8 @@ func (s Set[T]) UnionIter(o Set[T]) iter.Seq[T] {
 	}
 }
 
-// Intersect returns a new set containing elements present in both s and o.
-// It iterates the smaller set and allocates only for actual matches.
+// Intersect returns a new [Set] containing elements present in both s and o.
+// Neither s or o are mutated.
 func (s Set[T]) Intersect(o Set[T]) Set[T] {
 	if len(s) > len(o) {
 		s, o = o, s
@@ -180,7 +178,7 @@ func (s Set[T]) Equal(o Set[T]) bool {
 // A nil set produces no calls to yield.
 //
 // Range panics if yield is nil.
-func (s Set[T]) Range(yield func(T) bool) {
+func (s Set[T]) doRange(yield func(T) bool) {
 	if yield == nil {
 		panic("nil yield function in Set[T].Range")
 	}
@@ -189,6 +187,10 @@ func (s Set[T]) Range(yield func(T) bool) {
 			return
 		}
 	}
+}
+
+func (s Set[T]) Range(yield func(T) bool) {
+	s.doRange(yield)
 }
 
 // AsSlice returns elements as a slice.
@@ -303,10 +305,10 @@ func (s Set[T]) Add(item T) {
 
 // AddCheck inserts an item into the set. Returns true if item was already present.
 func (s Set[T]) AddCheck(item T) bool {
-	if s.Has(item) {
+	if _, ok := s[item]; ok {
 		return true
 	}
-	s.Add(item)
+	s[item] = struct{}{}
 	return false
 }
 

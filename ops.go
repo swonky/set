@@ -20,6 +20,8 @@ type SetLike[T comparable] interface {
 	String() string
 }
 
+type SetSlice[T comparable] []SetLike[T]
+
 // New returns a new Set containing the provided items.
 // If no items are provided, it returns an empty set.
 func New[T comparable](items ...T) Set[T] {
@@ -200,7 +202,7 @@ func TransformIter[T comparable, U any](s SetLike[T], fn func(T) U) iter.Seq[U] 
 // The function fn must not modify the input sets.
 //
 // Use IntersectRange when you only need to test or process elements on the fly.
-// Use IntersectAll when you need to retain the full result.
+// Use [Intersect] when you need to retain the full result.
 //
 // Example: apply an operation to all elements present in every set,
 // without allocating an intermediate result.
@@ -220,7 +222,10 @@ func TransformIter[T comparable, U any](s SetLike[T], fn func(T) U) iter.Seq[U] 
 //		}
 //		return true
 //	})
-func IntersectRange[T comparable](sets []SetLike[T], fn func(T) bool) {
+func IntersectRange[T comparable](
+	sets []SetLike[T],
+	fn func(T) bool,
+) {
 	switch len(sets) {
 	case 0:
 		return
@@ -249,7 +254,6 @@ func IntersectRange[T comparable](sets []SetLike[T], fn func(T) bool) {
 			}
 		}
 		return
-
 	case FrozenSet[T]:
 		for k := range s.s {
 			if !intersectHasAll(sets, smallest, k) {
@@ -261,7 +265,7 @@ func IntersectRange[T comparable](sets []SetLike[T], fn func(T) bool) {
 		}
 		return
 
-	case SyncSet[T]:
+	case *SyncSet[T]:
 		s.mu.RLock()
 		for k := range s.s {
 			if !intersectHasAll(sets, smallest, k) {
@@ -284,6 +288,46 @@ func IntersectRange[T comparable](sets []SetLike[T], fn func(T) bool) {
 	})
 }
 
+func IntersectRangeNew[T comparable](
+	sets []SetLike[T],
+	fn func(T) bool,
+) {
+	switch len(sets) {
+	case 0:
+		return
+	case 1:
+		sets[0].Range(fn)
+		return
+	}
+
+	s0, smallest := getSmallestSet(sets)
+
+	switch s := any(s0).(type) {
+	case Set[T]:
+		s.Range(itersectRanger(sets, smallest, fn))
+	case FrozenSet[T]:
+		s.Range(itersectRanger(sets, smallest, fn))
+	case *SyncSet[T]:
+		s.Range(itersectRanger(sets, smallest, fn))
+	default:
+		s0.Range(itersectRanger(sets, smallest, fn))
+	}
+}
+
+func itersectRanger[T comparable](sets []SetLike[T], skip int, fn func(t T) bool) func(T) bool {
+	return func(t T) bool {
+		for i := range sets {
+			if i == skip {
+				continue
+			}
+			if !sets[i].Has(t) {
+				return false
+			}
+		}
+		return fn(t)
+	}
+}
+
 func intersectHasAll[T comparable](sets []SetLike[T], skip int, k T) bool {
 	for i := range sets {
 		if i == skip {
@@ -294,4 +338,24 @@ func intersectHasAll[T comparable](sets []SetLike[T], skip int, k T) bool {
 		}
 	}
 	return true
+}
+
+func getSmallestSet[T comparable](sets SetSlice[T]) (SetLike[T], int) {
+	smallest := 0
+	for i := 1; i < len(sets); i++ {
+		if sets[i].Len() < sets[smallest].Len() {
+			smallest = i
+		}
+	}
+	return sets[smallest], smallest
+}
+
+func SmallestSet[T comparable](sets SetSlice[T]) (SetLike[T], int) {
+	smallest := 0
+	for i := 1; i < len(sets); i++ {
+		if sets[i].Len() < sets[smallest].Len() {
+			smallest = i
+		}
+	}
+	return sets[smallest], smallest
 }
