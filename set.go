@@ -67,6 +67,7 @@ func (s Set[T]) Intersect(o Set[T]) Set[T] {
 		s, o = o, s
 	}
 	out := make(Set[T], len(s))
+	out := make(Set[T], len(s))
 	for k := range s {
 		if _, ok := o[k]; ok {
 			out[k] = struct{}{}
@@ -167,8 +168,23 @@ func (s Set[T]) Equal(o Set[T]) bool {
 	return len(s) == len(o) && s.IsSubsetOf(o)
 }
 
-// Range
+// Range calls yield for each element in the set.
+//
+// Iteration continues until all elements have been processed or yield returns false.
+//
+// Iteration order is not specified and may vary between calls.
+//
+// Range performs no allocations.
+//
+// The set must not be modified during iteration.
+//
+// A nil set produces no calls to yield.
+//
+// Range panics if yield is nil.
 func (s Set[T]) Range(yield func(T) bool) {
+	if yield == nil {
+		panic("nil yield function in Set[T].Range")
+	}
 	for k := range s {
 		if !yield(k) {
 			return
@@ -244,6 +260,25 @@ func (s Set[T]) First() (T, bool) {
 	var zero T
 	return zero, false
 }
+
+// Partition
+func (s Set[T]) Partition(pred func(T) bool) (Set[T], Set[T]) {
+	if pred == nil {
+		panic("nil predicate")
+	}
+	a := make(Set[T], len(s)/2)
+	b := make(Set[T], len(s)/2)
+	for k := range s {
+		if pred(k) {
+			a[k] = struct{}{}
+		} else {
+			b[k] = struct{}{}
+		}
+	}
+	return a, b
+}
+
+// Mutable operations
 
 // Partition
 func (s Set[T]) Partition(pred func(T) bool) (Set[T], Set[T]) {
