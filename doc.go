@@ -7,7 +7,7 @@
 //	s := set.New(1, 2, 3)
 //	s.Add(4)
 //
-//	if s.Has(2) {
+//	if s.Contains(2) {
 //		fmt.Println("contains 2")
 //	}
 //

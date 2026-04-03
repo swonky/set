@@ -28,7 +28,7 @@ t := set.New(3, 4, 5)
 u := s.Union(t)     // {1,2,3,4,5}
 s.UnionInto(t)      // mutate s
 
-if s.Has(2) {
+if s.Contains(2) {
     // ...
 }
 ```

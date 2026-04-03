@@ -1,6 +1,4 @@
-// Package set provides a generic set type and operations for working with sets of comparable elements.
-// A set is implemented as a map[T]struct{} for memory efficiency and O(1) average-case operations.
-package set
+package base
 
 import (
 	"fmt"
@@ -11,14 +9,11 @@ import (
 )
 
 var _ SetLike[int] = Set[int]{}
+var _ MutableSet[int] = (*Set[int])(nil)
 
 // Set[T] represents a mathematical set of comparable elements.
 // The zero value is ready to use but prefer using New() for initialization.
 type Set[T comparable] map[T]struct{}
-
-func (s Set[T]) Freeze() FrozenSet[T] {
-	return FrozenSet[T]{s: maps.Clone(s)}
-}
 
 // Union returns a new set containing all elements from s and o.
 func (s Set[T]) Union(o Set[T]) Set[T] {
@@ -109,21 +104,21 @@ func (s Set[T]) SymDiff(o Set[T]) Set[T] {
 	return s.Diff(o).Union(o.Diff(s))
 }
 
-// Has reports whether the item is present.
-func (s Set[T]) Has(item T) bool {
+// Contains reports whether the item is present.
+func (s Set[T]) Contains(item T) bool {
 	_, ok := s[item]
 	return ok
 }
 
 // HasAny reports whether any of the item are present.
 func (s Set[T]) HasAny(item ...T) bool {
-	return slices.ContainsFunc(item, s.Has)
+	return slices.ContainsFunc(item, s.Contains)
 }
 
 // HasAll reports whether all of the item are present.
 func (s Set[T]) HasAll(item ...T) bool {
 	for _, v := range item {
-		if !s.Has(v) {
+		if !s.Contains(v) {
 			return false
 		}
 	}
@@ -148,7 +143,7 @@ func (s Set[T]) IsEmpty() bool {
 // IsSubsetOf reports whether s ⊆ o.
 func (s Set[T]) IsSubsetOf(o Set[T]) bool {
 	for k := range s {
-		if !o.Has(k) {
+		if !o.Contains(k) {
 			return false
 		}
 	}
@@ -161,7 +156,7 @@ func (s Set[T]) IsSupersetOf(o Set[T]) bool {
 }
 
 // Equal reports whether two sets contain the same elements.
-func (s Set[T]) Equal(o Set[T]) bool {
+func (s Set[T]) EqualFunc(o Set[T]) bool {
 	return len(s) == len(o) && s.IsSubsetOf(o)
 }
 
@@ -178,7 +173,7 @@ func (s Set[T]) Equal(o Set[T]) bool {
 // A nil set produces no calls to yield.
 //
 // Range panics if yield is nil.
-func (s Set[T]) doRange(yield func(T) bool) {
+func (s Set[T]) Range(yield func(T) bool) {
 	if yield == nil {
 		panic("nil yield function in Set[T].Range")
 	}
@@ -187,10 +182,6 @@ func (s Set[T]) doRange(yield func(T) bool) {
 			return
 		}
 	}
-}
-
-func (s Set[T]) Range(yield func(T) bool) {
-	s.doRange(yield)
 }
 
 // AsSlice returns elements as a slice.
@@ -223,7 +214,7 @@ func (s Set[T]) Filter(fn func(T) bool) Set[T] {
 }
 
 // Any reports whether any element satisfies fn.
-func (s Set[T]) Any(fn func(T) bool) bool {
+func (s Set[T]) AnyFunc(fn func(T) bool) bool {
 	for k := range s {
 		if fn(k) {
 			return true
@@ -233,7 +224,7 @@ func (s Set[T]) Any(fn func(T) bool) bool {
 }
 
 // All reports whether all elements satisfy fn.
-func (s Set[T]) All(fn func(T) bool) bool {
+func (s Set[T]) AllFunc(fn func(T) bool) bool {
 	for k := range s {
 		if !fn(k) {
 			return false
@@ -285,51 +276,21 @@ func (s Set[T]) Partition(pred func(T) bool) (Set[T], Set[T]) {
 
 // UnionInto inserts all elements from o into s in place.
 // It performs a single pass over o with no allocations.
-func (s Set[T]) UnionInto(o Set[T]) {
+func (s *Set[T]) UnionInto(o Set[T]) {
 	for k := range o {
-		s[k] = struct{}{}
-	}
-}
-
-// AddAll inserts one or more items into the set.
-func (s Set[T]) AddAll(items ...T) {
-	for _, item := range items {
-		s[item] = struct{}{}
+		(*s)[k] = struct{}{}
 	}
 }
 
 // Add inserts an item into the set.
-func (s Set[T]) Add(item T) {
-	s[item] = struct{}{}
-}
-
-// AddCheck inserts an item into the set. Returns true if item was already present.
-func (s Set[T]) AddCheck(item T) bool {
-	if _, ok := s[item]; ok {
-		return true
+func (s *Set[T]) Add(item T) {
+	if *s == nil {
+		*s = make(Set[T])
 	}
-	s[item] = struct{}{}
-	return false
-}
-
-// Clear removes all elements.
-func (s Set[T]) Clear() {
-	for k := range s {
-		delete(s, k)
-	}
+	(*s)[item] = struct{}{}
 }
 
 // Delete removes an item from the set.
-func (s Set[T]) Delete(item T) {
-	delete(s, item)
-}
-
-// Pop removes and returns an arbitrary element.
-func (s Set[T]) Pop() (T, bool) {
-	for k := range s {
-		delete(s, k)
-		return k, true
-	}
-	var zero T
-	return zero, false
+func (s *Set[T]) Delete(item T) {
+	delete(*s, item)
 }
