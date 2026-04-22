@@ -20,9 +20,20 @@ type MutableSet[T any] interface {
 type LockableSet[T any] interface {
 	SetLike[T]
 
-	WithReadLock(func(SetLike[T]))
+	WithRLock(func(SetLike[T]))
 }
 
-type Cloner[T any] interface {
-	Clone() T
+type MutableLockableSet[T any] interface {
+	MutableSet[T]
+	LockableSet[T]
+
+	WithRWLock(func(SetLike[T]))
+}
+
+type AsSetter[T comparable] interface {
+	AsSet() Set[T]
+}
+
+type Snapshotable[T any] interface {
+	Snapshot() SetLike[T]
 }

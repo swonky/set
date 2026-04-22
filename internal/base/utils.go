@@ -7,3 +7,7 @@ func GetCap(cap ...int) int {
 	}
 	return size
 }
+
+func MaxInt() int {
+	return int(^uint(0) >> 1)
+}

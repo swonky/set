@@ -276,21 +276,18 @@ func (s Set[T]) Partition(pred func(T) bool) (Set[T], Set[T]) {
 
 // UnionInto inserts all elements from o into s in place.
 // It performs a single pass over o with no allocations.
-func (s *Set[T]) UnionInto(o Set[T]) {
+func (s Set[T]) UnionInto(o Set[T]) {
 	for k := range o {
-		(*s)[k] = struct{}{}
+		s[k] = struct{}{}
 	}
 }
 
 // Add inserts an item into the set.
-func (s *Set[T]) Add(item T) {
-	if *s == nil {
-		*s = make(Set[T])
-	}
-	(*s)[item] = struct{}{}
+func (s Set[T]) Add(item T) {
+	s[item] = struct{}{}
 }
 
 // Delete removes an item from the set.
-func (s *Set[T]) Delete(item T) {
-	delete(*s, item)
+func (s Set[T]) Delete(item T) {
+	delete(s, item)
 }

@@ -2,82 +2,181 @@ package set
 
 import (
 	"iter"
+	"maps"
 	"slices"
+
+	"github.com/swonky/set/internal/base"
+	"github.com/swonky/set/lazyset"
 )
 
-var _ SetLike[int] = FrozenSet[int]{}
-
-// New returns a new Set containing the provided items.
+// New returns a new Set with a .
 // If no items are provided, it returns an empty set.
-func New[T comparable](items ...T) Set[T] {
-	s := make(Set[T], len(items))
-	for _, item := range items {
-		s[item] = struct{}{}
-	}
-	return s
-}
-
-// Make returns a new Set with a .
-// If no items are provided, it returns an empty set.
-func Make[T comparable](size ...int) Set[T] {
-	if len(size) > 0 && size[0] > 0 {
-		return make(Set[T], size[0])
-	}
-	return make(Set[T], 0)
+func New[T comparable](cap ...int) Set[T] {
+	return make(Set[T], base.GetCap(cap...))
 }
 
 // Collect returns a new Set containing all elements produced by the iterator.
 // If a positive capacity hint is provided, it is used to preallocate the set.
 func Collect[T comparable](it iter.Seq[T], size ...int) Set[T] {
-	s := Make[T](size...)
+	s := make(base.Set[T], base.GetCap(size...))
 	for v := range it {
 		s[v] = struct{}{}
 	}
 	return s
 }
 
-func Clone[T any](s Cloner[T]) T {
-	return s.Clone()
+func FromSetLike[T comparable](s SetLike[T]) Set[T] {
+	switch e := s.(type) {
+	case Set[T]:
+		return maps.Clone(e)
+	case AsSetter[T]:
+		return e.AsSet()
+	}
+	r := make(map[T]struct{}, s.Len())
+	for v := range s.Range {
+		r[v] = struct{}{}
+	}
+	return r
+}
+
+func FromSlice[S ~[]T, T comparable](s S) Set[T] {
+	r := make(Set[T], len(s))
+	for _, v := range s {
+		r[v] = struct{}{}
+	}
+	return r
 }
 
 // Specific reducer functions
 
-// Union returns a new Set containing all elements from the provided sets.
-func Union[T comparable](sets ...Set[T]) Set[T] {
-	return Reduce(sets, func(a, b Set[T]) Set[T] { return a.Union(b) })
-}
+// // Union returns a new Set containing all elements from the provided sets.
+// func Union[T comparable](sets ...SetLike[T]) Set[T] {
+// 	return Reduce(sets, func(a, b Set[T]) Set[T] { return a.Union(b) })
+// }
+
+// func unionImpl[T comparable](s []Set[T]) Set[T] {
+// 	return Reduce(s, func(a, b Set[T]) Set[T] { return a.Union(b) })
+// }
 
 // Intersect returns a new Set containing elements present in all input sets.
 // Evaluation stops early if the result becomes empty.
-func Intersect[T comparable](sets ...Set[T]) Set[T] {
-	return ReduceTry(
-		sets,
-		func(a, b Set[T]) (Set[T], bool) {
-			r := a.Intersect(b)
-			return r, !r.IsEmpty()
-		},
-	)
+// func Intersect[T comparable](sets ...Set[T]) Set[T] {
+// 	return ReduceTry(
+// 		sets,
+// 		func(a, b Set[T]) (Set[T], bool) {
+// 			r := a.Intersect(b)
+// 			return r, !r.IsEmpty()
+// 		},
+// 	)
+// }
+
+// func Union[T comparable](sets []SetLike[T]) *lazyset.LazySet[T, UnionOp[T]] {
+// 	slices.SortFunc(sets, func(a, b SetLike[T]) int { return cmp.Compare(b.Len(), a.Len()) })
+// 	return lazyset.New(sets, UnionOp[T]{})
+// }
+
+type UnionOp[T any] struct{}
+
+func (UnionOp[T]) Range(a, b base.SetLike[T], yield func(T) bool) {
+	a.Range(yield)
+	b.Range(func(elem T) bool {
+		if a.Contains(elem) {
+			return true
+		}
+		return yield(elem)
+	})
 }
 
-// UnionIter returns an iterator of unique elements from the provided sets,
-// preserving first occurrence order across sets.
-func UnionIter[T comparable](sets ...SetLike[T]) iter.Seq[T] {
-	return func(yield func(T) bool) {
-		seen := New[T]()
-		for _, s := range sets {
-			for e := range s.Range {
-				if _, exists := seen[e]; !exists {
-					seen[e] = struct{}{}
-					if !yield(e) {
-						return
-					}
-				}
-			}
+func (UnionOp[T]) Contains(a, b base.SetLike[T], elem T) bool {
+	return a.Contains(elem) || b.Contains(elem)
+}
+
+func unionContainsFn[T any](a, b base.SetLike[T], elem T) bool {
+	return a.Contains(elem) || b.Contains(elem)
+}
+
+func intersectRangeFn[T any](a, b base.SetLike[T], yield func(T) bool) {
+	a.Range(func(elem T) bool {
+		if !b.Contains(elem) {
+			return true
+		}
+		return yield(elem)
+	})
+}
+
+func intersectContainsFn[T any](a, b base.SetLike[T], elem T) bool {
+	return a.Contains(elem) && b.Contains(elem)
+}
+
+// ops.go
+
+// func Union[T any](sets ...SetLike[T]) lazyset.LazySet[T] {
+// 	return lazyset.New(unionTwo[T], sets)
+// }
+
+// // unionTwo yields elements from b that are not already present in a.
+// // a represents all sets yielded so far, so this produces no duplicates
+// // across the full reduction.
+// func unionTwo[T any](a, b base.SetLike[T], yield func(T) bool) bool {
+// 	if la, ok := a.(base.LockableSet[T]); ok {
+// 		var cont bool
+// 		la.WithRLock(func(ua base.SetLike[T]) {
+// 			cont = unionTwo(ua, b, yield)
+// 		})
+// 		return cont
+// 	}
+// 	if lb, ok := b.(base.LockableSet[T]); ok {
+// 		var cont bool
+// 		lb.WithRLock(func(ub base.SetLike[T]) {
+// 			cont = unionTwo(a, ub, yield)
+// 		})
+// 		return cont
+// 	}
+// 	b.Range(func(elem T) bool {
+// 		if a.Contains(elem) {
+// 			return true
+// 		}
+// 		return yield(elem)
+// 	})
+// 	return true
+// }
+
+// func Union[T any](sets ...SetLike[T]) lazyset.LazySet[T] {
+// 	return lazyset.New(unionImpl[T], sets)
+// }
+
+func UnionInto[T any](out MutableSet[T], sets ...SetLike[T]) {
+	// ordered := slices.Clone(sets)
+	// SortByLen(ordered)
+	for _, s := range sets {
+		for elem := range s.Range {
+			out.Add(elem)
 		}
 	}
 }
 
-func SortByLen[T comparable](sets []SetLike[T]) {
+func CopyInto[T comparable](out Set[T], sets ...Set[T]) {
+	// ordered := slices.Clone(sets)
+	// SortByLen(ordered)
+	for _, s := range sets {
+		maps.Copy(out, s)
+	}
+}
+
+// func unionImpl[T any](a, b SetLike[T]) {
+// 	for elem := range UnionIter(ordered...) {
+// 		if len(a) > len(b) {
+// 			a, b = b, a
+// 		}
+// 		r := s.Clone()
+// 		for k := range o {
+// 			r[k] = struct{}{}
+// 		}
+// 		return r
+// 	}
+// }
+
+func SortByLen[T any](sets []SetLike[T]) {
 	slices.SortFunc(sets, func(a, b SetLike[T]) int {
 		la, lb := a.Len(), b.Len()
 		switch {
@@ -145,166 +244,12 @@ func TransformIter[T comparable, U any](s SetLike[T], fn func(T) U) iter.Seq[U] 
 	}
 }
 
-// IntersectRange calls fn for each element that exists in all provided sets.
-//
-// It is intended for high-frequency filtering across multiple membership sets where early exit matters.
-// It performs no allocations and does not construct a result set.
-//
-// For each matching element k, fn(k) is invoked.
-// If fn returns false, iteration stops immediately.
-// The order of elements is unspecified.
-//
-// IntersectRange must not be used concurrently with modifications to any of the input sets.
-// The behavior is undefined if the sets are changed while iteration is in progress.
-// The function fn must not modify the input sets.
-//
-// Use IntersectRange when you only need to test or process elements on the fly.
-// Use [Intersect] when you need to retain the full result.
-//
-// Example: apply an operation to all elements present in every set,
-// without allocating an intermediate result.
-//
-//	IntersectRange([]SetLike[int]{a, b, c}, func(x int) bool {
-//		process(x)
-//		return true
-//	})
-//
-// Example: check whether a value exists in all sets
-//
-//	found := false
-//	IntersectRange([]SetLike[string]{setA, setB, setC}, func(s string) bool {
-//		if s == "foo" {
-//			found = true
-//			return false
-//		}
-//		return true
-//	})
-// func IntersectRange[T comparable](
-// 	sets []SetLike[T],
-// 	fn func(T) bool,
-// ) {
-// 	switch len(sets) {
-// 	case 0:
-// 		return
-// 	case 1:
-// 		sets[0].Range(fn)
-// 		return
-// 	}
-
-// 	smallest := 0
-// 	for i := 1; i < len(sets); i++ {
-// 		if sets[i].Len() < sets[smallest].Len() {
-// 			smallest = i
-// 		}
-// 	}
-
-// 	s0 := sets[smallest]
-
-// 	switch s := any(s0).(type) {
-// 	case Set[T]:
-// 		for k := range s {
-// 			if !intersectHasAll(sets, smallest, k) {
-// 				continue
-// 			}
-// 			if !fn(k) {
-// 				return
-// 			}
-// 		}
-// 		return
-// 	case FrozenSet[T]:
-// 		for k := range s.s {
-// 			if !intersectHasAll(sets, smallest, k) {
-// 				continue
-// 			}
-// 			if !fn(k) {
-// 				return
-// 			}
-// 		}
-// 		return
-
-// 	case *SyncSet[T]:
-// 		s.WithReadLock(func(sl SetLike[T]) {
-// 			for k := range sl.Range {
-// 				if !intersectHasAll(sets, smallest, k) {
-// 					continue
-// 				}
-// 				if !fn(k) {
-// 					return
-// 				}
-// 			}
-// 			return
-// 		})
-
-// 	}
-
-// 	s0.Range(func(k T) bool {
-// 		if !intersectHasAll(sets, smallest, k) {
-// 			return true
-// 		}
-// 		return fn(k)
-// 	})
-// }
-
-func IntersectRangeNew[T comparable](
-	sets []SetLike[T],
-	fn func(T) bool,
-) {
-	switch len(sets) {
-	case 0:
-		return
-	case 1:
-		sets[0].Range(fn)
-		return
-	}
-
-	s0, smallest := getSmallestSet(sets)
-
-	switch s := any(s0).(type) {
-	case Set[T]:
-		s.Range(itersectRanger(sets, smallest, fn))
-	case FrozenSet[T]:
-		s.Range(itersectRanger(sets, smallest, fn))
-	case *SyncSet[T]:
-		s.Range(itersectRanger(sets, smallest, fn))
-	default:
-		s0.Range(itersectRanger(sets, smallest, fn))
-	}
+func Intersect[T comparable](sets ...SetLike[T]) Intersection[SetLike[T], T] {
+	return lazyset.NewIntersection(sets)
 }
 
-func itersectRanger[T comparable](sets []SetLike[T], skip int, fn func(t T) bool) func(T) bool {
-	return func(t T) bool {
-		for i := range sets {
-			if i == skip {
-				continue
-			}
-			if !sets[i].Contains(t) {
-				return false
-			}
-		}
-		return fn(t)
-	}
-}
-
-func intersectHasAll[T comparable](sets []SetLike[T], skip int, k T) bool {
-	for i := range sets {
-		if i == skip {
-			continue
-		}
-		if !sets[i].Contains(k) {
-			return false
-		}
-	}
-	return true
-}
-
-func getSmallestSet[T comparable](sets []SetLike[T]) (SetLike[T], int) {
-	smallest := 0
-	for i := 1; i < len(sets); i++ {
-		if sets[i].Len() < sets[smallest].Len() {
-			smallest = i
-		}
-	}
-	return sets[smallest], smallest
+func Unite[T comparable](sets ...SetLike[T]) Union[SetLike[T], T] {
+	return lazyset.NewUnion(sets)
 }
 
 // All reports whether all elements satisfy fn.
@@ -384,7 +329,7 @@ func AsSlice[T any](s SetLike[T]) []T {
 // Transform panics if fn is nil.
 func Transform[A, B comparable](s SetLike[A], fn func(A) B) Set[B] {
 	return op(s, func(sl SetLike[A]) Set[B] {
-		r := Make[B](s.Len())
+		r := New[B](s.Len())
 		for t := range sl.Range {
 			r.Add(fn(t))
 		}
@@ -407,7 +352,7 @@ func Filter[T any](s SetLike[T], fn func(T) bool) iter.Seq[T] {
 
 func FilterSet[T comparable](s SetLike[T], fn func(T) bool) Set[T] {
 	return op(s, func(sl SetLike[T]) Set[T] {
-		r := Make[T](sl.Len())
+		r := New[T](sl.Len())
 		for t := range sl.Range {
 			if fn(t) {
 				r.Add(t)
@@ -494,6 +439,21 @@ func Remove[T any](ms MutableSet[T], elems ...T) {
 	}
 }
 
+func Pop[T any](ms MutableSet[T]) (T, bool) {
+	out := op(ms, func(sl SetLike[T]) result[T] {
+		msl := sl.(MutableSet[T])
+		var r result[T]
+		for t := range sl.Range {
+			r.v = t
+			r.ok = true
+			msl.Delete(t)
+			return r
+		}
+		return r
+	})
+	return out.v, out.ok
+}
+
 func mapPop[K comparable, V any](m map[K]V) (K, V, bool) {
 	for k, v := range m {
 		delete(m, k)
@@ -505,6 +465,9 @@ func mapPop[K comparable, V any](m map[K]V) (K, V, bool) {
 }
 
 func Clear[T any](s MutableSet[T]) {
+	if s.Len() == 0 {
+		return
+	}
 	op(s, func(sl SetLike[T]) struct{} {
 		ms := s
 		sl.Range(func(t T) bool {
@@ -570,7 +533,7 @@ func SymDiffWith[T any](dst MutableSet[T], src SetLike[T]) {
 func op[T any, R any](s SetLike[T], fn func(SetLike[T]) R) R {
 	if l, ok := s.(LockableSet[T]); ok {
 		var r R
-		l.WithReadLock(func(s2 SetLike[T]) {
+		l.WithRLock(func(s2 SetLike[T]) {
 			r = fn(s2)
 		})
 		return r
@@ -585,8 +548,8 @@ func op2[T any, R any](
 	if la, ok := a.(LockableSet[T]); ok {
 		if lb, ok := b.(LockableSet[T]); ok {
 			var r R
-			la.WithReadLock(func(a2 SetLike[T]) {
-				lb.WithReadLock(func(b2 SetLike[T]) {
+			la.WithRLock(func(a2 SetLike[T]) {
+				lb.WithRLock(func(b2 SetLike[T]) {
 					r = fn(a2, b2)
 				})
 			})
@@ -594,4 +557,10 @@ func op2[T any, R any](
 		}
 	}
 	return fn(a, b)
+}
+
+func CollectInto[T any](dst MutableSet[T], src iter.Seq[T]) {
+	for t := range src {
+		dst.Add(t)
+	}
 }

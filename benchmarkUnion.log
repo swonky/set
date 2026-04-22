@@ -1,0 +1,658 @@
+# github.com/swonky/set/lazyset
+lazyset/lazyset.go:79:13: imprecise interface call
+lazyset/lazyset.go:69:10: imprecise interface call
+lazyset/lazyset.go:75:6: imprecise interface call
+lazyset/lazyset.go:48:10: imprecise interface call
+lazyset/lazyset.go:57:6: imprecise interface call
+lazyset/lazyset.go:78:6: can inline LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Contains with cost 71 as: method(LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }]) func(*[18]uintptr, go.shape.int) bool { return (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], go.shape.int) bool)(&.dict[1])(s.op, s.a, s.b, elem) }
+lazyset/lazyset.go:64:6: cannot inline LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range: function too complex: cost 187 exceeds budget 80
+lazyset/lazyset.go:67:17: can inline LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range.func1 with cost 76 as: func(base.SetLike[go.shape.int]) { lb.WithRLock(func literal) }
+lazyset/lazyset.go:68:18: can inline LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range.func1.1 with cost 68 as: func(base.SetLike[go.shape.int]) { (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&.dict[0])(s.op, a2, b2, yield) }
+lazyset/lazyset.go:42:6: cannot inline LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet: function too complex: cost 211 exceeds budget 80
+lazyset/lazyset.go:46:17: can inline LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet.func1 with cost 76 as: func(base.SetLike[go.shape.int]) { lb.WithRLock(func literal) }
+lazyset/lazyset.go:47:18: can inline LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet.func1.1 with cost 83 as: func(base.SetLike[go.shape.int]) { (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&.dict[0])(s.op, a2, b2, func literal) }
+lazyset/lazyset.go:48:25: can inline LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet.func1.1.1 with cost 7 as: func(go.shape.int) bool { bs[t] = struct {}{}; return true }
+lazyset/lazyset.go:57:23: can inline LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet.func2 with cost 7 as: func(go.shape.int) bool { bs[t] = struct {}{}; return true }
+lazyset/lazyset.go:33:6: cannot inline LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len: function too complex: cost 86 exceeds budget 80
+lazyset/lazyset.go:35:10: can inline LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len.func1 with cost 5 as: func(go.shape.int) bool { n++; return true }
+lazyset/lazyset.go:78:6: can inline LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].Contains with cost 77 as: method(LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]) func(int) bool { return LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Contains(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]], elem) }
+lazyset/lazyset.go:64:6: can inline LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].Range with cost 62 as: method(LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]) func(func(int) bool) { LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]], yield) }
+lazyset/lazyset.go:42:6: can inline LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].AsSet with cost 62 as: method(LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]) func() base.Set[int] { return LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]) }
+lazyset/lazyset.go:33:6: can inline LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].Len with cost 62 as: method(LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]) func() int { return LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]) }
+lazyset/lazyset.go:78:6: inlining call to LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Contains
+lazyset/lazyset.go:78:6: imprecise interface call
+<autogenerated>:1: inlining call to LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].AsSet
+<autogenerated>:1: inlining call to LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].Contains
+<autogenerated>:1: inlining call to LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].Len
+<autogenerated>:1: inlining call to LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].Range
+lazyset/lazyset.go:78:7: parameter s leaks to {heap} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Contains with derefs=0:
+lazyset/lazyset.go:78:7:   flow: {heap} ← s:
+lazyset/lazyset.go:78:7:     from s.op (dot) at lazyset/lazyset.go:79:10
+lazyset/lazyset.go:78:7:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], go.shape.int) bool)(&.dict[1])(s.op, s.a, s.b, elem) (call parameter) at lazyset/lazyset.go:79:22
+lazyset/lazyset.go:67:17: func literal escapes to heap in LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range:
+lazyset/lazyset.go:67:17:   flow: {heap} ← &{storage for func literal}:
+lazyset/lazyset.go:67:17:     from func literal (spill) at lazyset/lazyset.go:67:17
+lazyset/lazyset.go:67:17:     from la.WithRLock(func literal) (call parameter) at lazyset/lazyset.go:67:16
+lazyset/lazyset.go:68:18: func literal escapes to heap in LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range.func1:
+lazyset/lazyset.go:68:18:   flow: {heap} ← &{storage for func literal}:
+lazyset/lazyset.go:68:18:     from func literal (spill) at lazyset/lazyset.go:68:18
+lazyset/lazyset.go:68:18:     from lb.WithRLock(func literal) (call parameter) at lazyset/lazyset.go:68:17
+lazyset/lazyset.go:66:6: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range capturing by value: lb (addr=false assign=false width=16)
+lazyset/lazyset.go:64:7: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range capturing by value: s (addr=false assign=false width=48)
+lazyset/lazyset.go:64:30: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range capturing by value: yield (addr=false assign=false width=8)
+lazyset/lazyset.go:64:6: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range capturing by value: .dict (addr=false assign=false width=8)
+lazyset/lazyset.go:64:7: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range capturing by value: s (addr=false assign=false width=48)
+lazyset/lazyset.go:67:22: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range.func1 capturing by value: a2 (addr=false assign=false width=16)
+lazyset/lazyset.go:64:30: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range capturing by value: yield (addr=false assign=false width=8)
+lazyset/lazyset.go:64:6: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range capturing by value: .dict (addr=false assign=false width=8)
+lazyset/lazyset.go:64:7: parameter s leaks to {heap} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range with derefs=0:
+lazyset/lazyset.go:64:7:   flow: {heap} ← s:
+lazyset/lazyset.go:64:7:     from s.op (dot) at lazyset/lazyset.go:69:7
+lazyset/lazyset.go:64:7:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&.dict[0])(s.op, a2, b2, yield) (call parameter) at lazyset/lazyset.go:69:16
+lazyset/lazyset.go:67:22: parameter a2 leaks to {heap} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range.func1 with derefs=0:
+lazyset/lazyset.go:67:22:   flow: {heap} ← a2:
+lazyset/lazyset.go:67:22:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&.dict[0])(s.op, a2, b2, yield) (call parameter) at lazyset/lazyset.go:69:16
+lazyset/lazyset.go:68:23: parameter b2 leaks to {heap} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range.func1.1 with derefs=0:
+lazyset/lazyset.go:68:23:   flow: {heap} ← b2:
+lazyset/lazyset.go:68:23:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&.dict[0])(s.op, a2, b2, yield) (call parameter) at lazyset/lazyset.go:69:16
+lazyset/lazyset.go:64:30: parameter yield leaks to {heap} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range with derefs=0:
+lazyset/lazyset.go:64:30:   flow: {heap} ← yield:
+lazyset/lazyset.go:64:30:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&.dict[0])(s.op, a2, b2, yield) (call parameter) at lazyset/lazyset.go:69:16
+lazyset/lazyset.go:64:7: parameter s leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range with derefs=0:
+lazyset/lazyset.go:64:7:   flow: {storage for func literal} ← s:
+lazyset/lazyset.go:64:7:     from s (captured by a closure) at lazyset/lazyset.go:69:6
+lazyset/lazyset.go:67:22: parameter a2 leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range.func1 with derefs=0:
+lazyset/lazyset.go:67:22:   flow: {storage for func literal} ← a2:
+lazyset/lazyset.go:67:22:     from a2 (captured by a closure) at lazyset/lazyset.go:69:17
+lazyset/lazyset.go:64:30: parameter yield leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range with derefs=0:
+lazyset/lazyset.go:64:30:   flow: {storage for func literal} ← yield:
+lazyset/lazyset.go:64:30:     from yield (captured by a closure) at lazyset/lazyset.go:69:25
+lazyset/lazyset.go:64:6: parameter .dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range with derefs=0:
+lazyset/lazyset.go:64:6:   flow: {storage for func literal} ← .dict:
+lazyset/lazyset.go:64:6:     from .dict (captured by a closure) at lazyset/lazyset.go:64:6
+lazyset/lazyset.go:64:7: parameter s leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range with derefs=0:
+lazyset/lazyset.go:64:7:   flow: {storage for func literal} ← s:
+lazyset/lazyset.go:64:7:     from s (captured by a closure) at lazyset/lazyset.go:69:6
+lazyset/lazyset.go:64:30: parameter yield leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range with derefs=0:
+lazyset/lazyset.go:64:30:   flow: {storage for func literal} ← yield:
+lazyset/lazyset.go:64:30:     from yield (captured by a closure) at lazyset/lazyset.go:69:25
+lazyset/lazyset.go:64:6: parameter .dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range with derefs=0:
+lazyset/lazyset.go:64:6:   flow: {storage for func literal} ← .dict:
+lazyset/lazyset.go:64:6:     from .dict (captured by a closure) at lazyset/lazyset.go:64:6
+lazyset/lazyset.go:67:17: func literal escapes to heap
+lazyset/lazyset.go:68:18: func literal escapes to heap
+lazyset/lazyset.go:46:17: func literal escapes to heap in LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet:
+lazyset/lazyset.go:46:17:   flow: {heap} ← &{storage for func literal}:
+lazyset/lazyset.go:46:17:     from func literal (spill) at lazyset/lazyset.go:46:17
+lazyset/lazyset.go:46:17:     from la.WithRLock(func literal) (call parameter) at lazyset/lazyset.go:46:16
+lazyset/lazyset.go:47:18: func literal escapes to heap in LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet.func1:
+lazyset/lazyset.go:47:18:   flow: {heap} ← &{storage for func literal}:
+lazyset/lazyset.go:47:18:     from func literal (spill) at lazyset/lazyset.go:47:18
+lazyset/lazyset.go:47:18:     from lb.WithRLock(func literal) (call parameter) at lazyset/lazyset.go:47:17
+lazyset/lazyset.go:48:25: func literal escapes to heap in LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet.func1.1:
+lazyset/lazyset.go:48:25:   flow: {heap} ← &{storage for func literal}:
+lazyset/lazyset.go:48:25:     from func literal (spill) at lazyset/lazyset.go:48:25
+lazyset/lazyset.go:48:25:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&.dict[0])(s.op, a2, b2, func literal) (call parameter) at lazyset/lazyset.go:48:16
+lazyset/lazyset.go:57:23: func literal escapes to heap in LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet:
+lazyset/lazyset.go:57:23:   flow: {heap} ← &{storage for func literal}:
+lazyset/lazyset.go:57:23:     from func literal (spill) at lazyset/lazyset.go:57:23
+lazyset/lazyset.go:57:23:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&.dict[0])(s.op, s.a, s.b, func literal) (call parameter) at lazyset/lazyset.go:57:12
+lazyset/lazyset.go:45:6: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet capturing by value: lb (addr=false assign=false width=16)
+lazyset/lazyset.go:42:7: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet capturing by value: s (addr=false assign=false width=48)
+lazyset/lazyset.go:43:2: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet capturing by value: bs (addr=false assign=false width=8)
+lazyset/lazyset.go:42:6: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet capturing by value: .dict (addr=false assign=false width=8)
+lazyset/lazyset.go:42:7: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet capturing by value: s (addr=false assign=false width=48)
+lazyset/lazyset.go:46:22: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet.func1 capturing by value: a2 (addr=false assign=false width=16)
+lazyset/lazyset.go:43:2: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet capturing by value: bs (addr=false assign=false width=8)
+lazyset/lazyset.go:42:6: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet capturing by value: .dict (addr=false assign=false width=8)
+lazyset/lazyset.go:43:2: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet capturing by value: bs (addr=false assign=false width=8)
+lazyset/lazyset.go:42:6: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet capturing by value: .dict (addr=false assign=false width=8)
+lazyset/lazyset.go:43:2: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet capturing by value: bs (addr=false assign=false width=8)
+lazyset/lazyset.go:42:6: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet capturing by value: .dict (addr=false assign=false width=8)
+lazyset/lazyset.go:42:7: parameter s leaks to {heap} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet with derefs=0:
+lazyset/lazyset.go:42:7:   flow: {heap} ← s:
+lazyset/lazyset.go:42:7:     from s.op (dot) at lazyset/lazyset.go:48:7
+lazyset/lazyset.go:42:7:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&.dict[0])(s.op, a2, b2, func literal) (call parameter) at lazyset/lazyset.go:48:16
+lazyset/lazyset.go:46:22: parameter a2 leaks to {heap} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet.func1 with derefs=0:
+lazyset/lazyset.go:46:22:   flow: {heap} ← a2:
+lazyset/lazyset.go:46:22:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&.dict[0])(s.op, a2, b2, func literal) (call parameter) at lazyset/lazyset.go:48:16
+lazyset/lazyset.go:47:23: parameter b2 leaks to {heap} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet.func1.1 with derefs=0:
+lazyset/lazyset.go:47:23:   flow: {heap} ← b2:
+lazyset/lazyset.go:47:23:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&.dict[0])(s.op, a2, b2, func literal) (call parameter) at lazyset/lazyset.go:48:16
+lazyset/lazyset.go:42:6: parameter .dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet with derefs=0:
+lazyset/lazyset.go:42:6:   flow: {storage for func literal} ← .dict:
+lazyset/lazyset.go:42:6:     from .dict (captured by a closure) at lazyset/lazyset.go:42:6
+lazyset/lazyset.go:43:12: make(base.Set[go.shape.int]) escapes to heap in LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet:
+lazyset/lazyset.go:43:12:   flow: bs ← &{storage for make(base.Set[go.shape.int])}:
+lazyset/lazyset.go:43:12:     from make(base.Set[go.shape.int]) (spill) at lazyset/lazyset.go:43:12
+lazyset/lazyset.go:43:12:     from bs := make(base.Set[go.shape.int]) (assign) at lazyset/lazyset.go:43:5
+lazyset/lazyset.go:43:12:   flow: {storage for func literal} ← bs:
+lazyset/lazyset.go:43:12:     from bs (captured by a closure) at lazyset/lazyset.go:58:3
+lazyset/lazyset.go:42:6: parameter .dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet with derefs=0:
+lazyset/lazyset.go:42:6:   flow: {storage for func literal} ← .dict:
+lazyset/lazyset.go:42:6:     from .dict (captured by a closure) at lazyset/lazyset.go:42:6
+lazyset/lazyset.go:42:7: parameter s leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet with derefs=0:
+lazyset/lazyset.go:42:7:   flow: {storage for func literal} ← s:
+lazyset/lazyset.go:42:7:     from s (captured by a closure) at lazyset/lazyset.go:48:6
+lazyset/lazyset.go:46:22: parameter a2 leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet.func1 with derefs=0:
+lazyset/lazyset.go:46:22:   flow: {storage for func literal} ← a2:
+lazyset/lazyset.go:46:22:     from a2 (captured by a closure) at lazyset/lazyset.go:48:17
+lazyset/lazyset.go:42:6: parameter .dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet with derefs=0:
+lazyset/lazyset.go:42:6:   flow: {storage for func literal} ← .dict:
+lazyset/lazyset.go:42:6:     from .dict (captured by a closure) at lazyset/lazyset.go:42:6
+lazyset/lazyset.go:42:7: parameter s leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet with derefs=0:
+lazyset/lazyset.go:42:7:   flow: {storage for func literal} ← s:
+lazyset/lazyset.go:42:7:     from s (captured by a closure) at lazyset/lazyset.go:48:6
+lazyset/lazyset.go:42:6: parameter .dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet with derefs=0:
+lazyset/lazyset.go:42:6:   flow: {storage for func literal} ← .dict:
+lazyset/lazyset.go:42:6:     from .dict (captured by a closure) at lazyset/lazyset.go:42:6
+lazyset/lazyset.go:43:12: make(base.Set[go.shape.int]) escapes to heap
+lazyset/lazyset.go:46:17: func literal escapes to heap
+lazyset/lazyset.go:47:18: func literal escapes to heap
+lazyset/lazyset.go:48:25: func literal escapes to heap
+lazyset/lazyset.go:57:23: func literal escapes to heap
+lazyset/lazyset.go:35:10: func literal escapes to heap in LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len:
+lazyset/lazyset.go:35:10:   flow: {heap} ← &{storage for func literal}:
+lazyset/lazyset.go:35:10:     from func literal (spill) at lazyset/lazyset.go:35:10
+lazyset/lazyset.go:35:10:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range(s, (*[18]uintptr)(.dict[2]), func literal) (call parameter) at lazyset/lazyset.go:35:9
+lazyset/lazyset.go:34:2: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len capturing by ref: n (addr=false assign=true width=8)
+lazyset/lazyset.go:34:2: n escapes to heap in LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len:
+lazyset/lazyset.go:34:2:   flow: {storage for func literal} ← &n:
+lazyset/lazyset.go:34:2:     from n (captured by a closure) at lazyset/lazyset.go:36:3
+lazyset/lazyset.go:34:2:     from n (reference) at lazyset/lazyset.go:36:3
+lazyset/lazyset.go:33:6: LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len capturing by value: .dict (addr=false assign=false width=8)
+lazyset/lazyset.go:33:7: parameter s leaks to {heap} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len with derefs=0:
+lazyset/lazyset.go:33:7:   flow: {heap} ← s:
+lazyset/lazyset.go:33:7:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range(s, (*[18]uintptr)(.dict[2]), func literal) (call parameter) at lazyset/lazyset.go:35:9
+lazyset/lazyset.go:33:6: parameter .dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len with derefs=0:
+lazyset/lazyset.go:33:6:   flow: {storage for func literal} ← .dict:
+lazyset/lazyset.go:33:6:     from .dict (captured by a closure) at lazyset/lazyset.go:33:6
+lazyset/lazyset.go:34:2: moved to heap: n
+lazyset/lazyset.go:35:10: func literal escapes to heap
+lazyset/lazyset.go:78:7: parameter s leaks to {heap} for LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].Contains with derefs=0:
+lazyset/lazyset.go:78:7:   flow: s ← s:
+lazyset/lazyset.go:78:7:     from s, .dict, elem := s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]], elem (assign-pair) at lazyset/lazyset.go:78:6
+lazyset/lazyset.go:78:7:   flow: {heap} ← s:
+lazyset/lazyset.go:78:7:     from s.op (dot) at lazyset/lazyset.go:78:6
+lazyset/lazyset.go:78:7:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], go.shape.int) bool)(&.dict[1])(s.op, s.a, s.b, elem) (call parameter) at lazyset/lazyset.go:78:6
+lazyset/lazyset.go:64:7: parameter s leaks to {heap} for LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].Range with derefs=0:
+lazyset/lazyset.go:64:7:   flow: {heap} ← s:
+lazyset/lazyset.go:64:7:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]], yield) (call parameter) at lazyset/lazyset.go:64:6
+lazyset/lazyset.go:64:30: parameter yield leaks to {heap} for LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].Range with derefs=0:
+lazyset/lazyset.go:64:30:   flow: {heap} ← yield:
+lazyset/lazyset.go:64:30:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]], yield) (call parameter) at lazyset/lazyset.go:64:6
+lazyset/lazyset.go:42:7: parameter s leaks to {heap} for LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].AsSet with derefs=0:
+lazyset/lazyset.go:42:7:   flow: {heap} ← s:
+lazyset/lazyset.go:42:7:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]) (call parameter) at lazyset/lazyset.go:42:6
+lazyset/lazyset.go:33:7: parameter s leaks to {heap} for LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]].Len with derefs=0:
+lazyset/lazyset.go:33:7:   flow: {heap} ← s:
+lazyset/lazyset.go:33:7:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]) (call parameter) at lazyset/lazyset.go:33:6
+lazyset/lazyset.go:11:11: parameter a leaks to {heap} for BinaryOp[int].Contains with derefs=0:
+lazyset/lazyset.go:11:11:   flow: {heap} ← a:
+lazyset/lazyset.go:11:11:     from ~p0.Contains(a, b, elem) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:11:14: parameter b leaks to {heap} for BinaryOp[int].Contains with derefs=0:
+lazyset/lazyset.go:11:14:   flow: {heap} ← b:
+lazyset/lazyset.go:11:14:     from ~p0.Contains(a, b, elem) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:10:8: parameter a leaks to {heap} for BinaryOp[int].Range with derefs=0:
+lazyset/lazyset.go:10:8:   flow: {heap} ← a:
+lazyset/lazyset.go:10:8:     from ~p0.Range(a, b, yield) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:10:11: parameter b leaks to {heap} for BinaryOp[int].Range with derefs=0:
+lazyset/lazyset.go:10:11:   flow: {heap} ← b:
+lazyset/lazyset.go:10:11:     from ~p0.Range(a, b, yield) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:10:30: parameter yield leaks to {heap} for BinaryOp[int].Range with derefs=0:
+lazyset/lazyset.go:10:30:   flow: {heap} ← yield:
+lazyset/lazyset.go:10:30:     from ~p0.Range(a, b, yield) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:42:7: parameter s leaks to {heap} for (*LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]).AsSet with derefs=1:
+lazyset/lazyset.go:42:7:   flow: s ← *s:
+lazyset/lazyset.go:42:7:     from s (indirection) at <autogenerated>:1
+lazyset/lazyset.go:42:7:     from s := s (assign-pair) at <autogenerated>:1
+lazyset/lazyset.go:42:7:   flow: {heap} ← s:
+lazyset/lazyset.go:42:7:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:78:7: parameter s leaks to {heap} for (*LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]).Contains with derefs=1:
+lazyset/lazyset.go:78:7:   flow: s ← *s:
+lazyset/lazyset.go:78:7:     from s (indirection) at <autogenerated>:1
+lazyset/lazyset.go:78:7:     from s, elem := s, elem (assign-pair) at <autogenerated>:1
+lazyset/lazyset.go:78:7:   flow: s ← s:
+lazyset/lazyset.go:78:7:     from s, .dict, elem := s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]], elem (assign-pair) at <autogenerated>:1
+lazyset/lazyset.go:78:7:   flow: {heap} ← s:
+lazyset/lazyset.go:78:7:     from s.op (dot) at <autogenerated>:1
+lazyset/lazyset.go:78:7:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], go.shape.int) bool)(&.dict[1])(s.op, s.a, s.b, elem) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:33:7: parameter s leaks to {heap} for (*LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]).Len with derefs=1:
+lazyset/lazyset.go:33:7:   flow: s ← *s:
+lazyset/lazyset.go:33:7:     from s (indirection) at <autogenerated>:1
+lazyset/lazyset.go:33:7:     from s := s (assign-pair) at <autogenerated>:1
+lazyset/lazyset.go:33:7:   flow: {heap} ← s:
+lazyset/lazyset.go:33:7:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:64:7: parameter s leaks to {heap} for (*LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]).Range with derefs=1:
+lazyset/lazyset.go:64:7:   flow: s ← *s:
+lazyset/lazyset.go:64:7:     from s (indirection) at <autogenerated>:1
+lazyset/lazyset.go:64:7:     from s, yield := s, yield (assign-pair) at <autogenerated>:1
+lazyset/lazyset.go:64:7:   flow: {heap} ← s:
+lazyset/lazyset.go:64:7:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]], yield) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:64:30: parameter yield leaks to {heap} for (*LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]]).Range with derefs=0:
+lazyset/lazyset.go:64:30:   flow: yield ← yield:
+lazyset/lazyset.go:64:30:     from s, yield := s, yield (assign-pair) at <autogenerated>:1
+lazyset/lazyset.go:64:30:   flow: {heap} ← yield:
+lazyset/lazyset.go:64:30:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range(s, &.dict.LazySet[int,github.com/swonky/set/lazyset.BinaryOp[int]], yield) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:11:11: parameter a leaks to {heap} for interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }.Contains with derefs=0:
+lazyset/lazyset.go:11:11:   flow: {heap} ← a:
+lazyset/lazyset.go:11:11:     from go.shape.~p0.Contains(a, b, elem) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:11:14: parameter b leaks to {heap} for interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }.Contains with derefs=0:
+lazyset/lazyset.go:11:14:   flow: {heap} ← b:
+lazyset/lazyset.go:11:14:     from go.shape.~p0.Contains(a, b, elem) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:10:8: parameter a leaks to {heap} for interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }.Range with derefs=0:
+lazyset/lazyset.go:10:8:   flow: {heap} ← a:
+lazyset/lazyset.go:10:8:     from go.shape.~p0.Range(a, b, yield) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:10:11: parameter b leaks to {heap} for interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }.Range with derefs=0:
+lazyset/lazyset.go:10:11:   flow: {heap} ← b:
+lazyset/lazyset.go:10:11:     from go.shape.~p0.Range(a, b, yield) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:10:30: parameter yield leaks to {heap} for interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }.Range with derefs=0:
+lazyset/lazyset.go:10:30:   flow: {heap} ← yield:
+lazyset/lazyset.go:10:30:     from go.shape.~p0.Range(a, b, yield) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:42:7: parameter s leaks to {heap} for (*LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }]).AsSet with derefs=1:
+lazyset/lazyset.go:42:7:   flow: {heap} ← *s:
+lazyset/lazyset.go:42:7:     from s (indirection) at <autogenerated>:1
+lazyset/lazyset.go:42:7:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet(s, .dict) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:42:6: parameter .dict leaks to {heap} for (*LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }]).AsSet with derefs=0:
+lazyset/lazyset.go:42:6:   flow: {heap} ← .dict:
+lazyset/lazyset.go:42:6:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].AsSet(s, .dict) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:78:7: parameter s leaks to {heap} for (*LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }]).Contains with derefs=1:
+lazyset/lazyset.go:78:7:   flow: s ← *s:
+lazyset/lazyset.go:78:7:     from s (indirection) at <autogenerated>:1
+lazyset/lazyset.go:78:7:     from s, .dict, elem := s, .dict, elem (assign-pair) at <autogenerated>:1
+lazyset/lazyset.go:78:7:   flow: {heap} ← s:
+lazyset/lazyset.go:78:7:     from s.op (dot) at <autogenerated>:1
+lazyset/lazyset.go:78:7:     from (func(go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }, base.SetLike[go.shape.int], base.SetLike[go.shape.int], go.shape.int) bool)(&.dict[1])(s.op, s.a, s.b, elem) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:33:7: parameter s leaks to {heap} for (*LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }]).Len with derefs=1:
+lazyset/lazyset.go:33:7:   flow: {heap} ← *s:
+lazyset/lazyset.go:33:7:     from s (indirection) at <autogenerated>:1
+lazyset/lazyset.go:33:7:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len(s, .dict) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:33:6: parameter .dict leaks to {heap} for (*LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }]).Len with derefs=0:
+lazyset/lazyset.go:33:6:   flow: {heap} ← .dict:
+lazyset/lazyset.go:33:6:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Len(s, .dict) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:64:7: parameter s leaks to {heap} for (*LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }]).Range with derefs=1:
+lazyset/lazyset.go:64:7:   flow: {heap} ← *s:
+lazyset/lazyset.go:64:7:     from s (indirection) at <autogenerated>:1
+lazyset/lazyset.go:64:7:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range(s, .dict, yield) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:64:6: parameter .dict leaks to {heap} for (*LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }]).Range with derefs=0:
+lazyset/lazyset.go:64:6:   flow: {heap} ← .dict:
+lazyset/lazyset.go:64:6:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range(s, .dict, yield) (call parameter) at <autogenerated>:1
+lazyset/lazyset.go:64:30: parameter yield leaks to {heap} for (*LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }]).Range with derefs=0:
+lazyset/lazyset.go:64:30:   flow: {heap} ← yield:
+lazyset/lazyset.go:64:30:     from LazySet[go.shape.int,go.shape.interface { Contains(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], int) bool; Range(github.com/swonky/set/internal/base.SetLike[int], github.com/swonky/set/internal/base.SetLike[int], func(int) bool) }].Range(s, .dict, yield) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:19:6: can inline lazyset.New[go.shape.int,go.shape.struct {}] with cost 55 as: func(*[7]uintptr, []base.SetLike[go.shape.int], go.shape.struct {}) *lazyset.LazySet[go.shape.int,go.shape.struct {}] { if len(lazyset.sets) == 1 { return &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} }; lazyset.acc := &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}; for loop; return lazyset.acc }
+./lazyset/lazyset.go:64:6: cannot inline lazyset.LazySet[go.shape.int,go.shape.struct {}].Range: function too complex: cost 187 exceeds budget 80
+./lazyset/lazyset.go:67:17: can inline lazyset.LazySet[go.shape.int,go.shape.struct {}].Range.func1 with cost 76 as: func(base.SetLike[go.shape.int]) { lazyset.lb.WithRLock(func literal) }
+./lazyset/lazyset.go:68:18: can inline lazyset.LazySet[go.shape.int,go.shape.struct {}].Range.func1.1 with cost 68 as: func(base.SetLike[go.shape.int]) { (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&lazyset..dict[0])(lazyset.s.op, lazyset.a2, lazyset.b2, lazyset.yield) }
+./lazyset/lazyset.go:42:6: cannot inline lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet: function too complex: cost 211 exceeds budget 80
+./lazyset/lazyset.go:46:17: can inline lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet.func1 with cost 76 as: func(base.SetLike[go.shape.int]) { lazyset.lb.WithRLock(func literal) }
+./lazyset/lazyset.go:47:18: can inline lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet.func1.1 with cost 83 as: func(base.SetLike[go.shape.int]) { (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&lazyset..dict[0])(lazyset.s.op, lazyset.a2, lazyset.b2, func literal) }
+./lazyset/lazyset.go:48:25: can inline lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet.func1.1.1 with cost 7 as: func(go.shape.int) bool { lazyset.bs[lazyset.t] = struct {}{}; return true }
+./lazyset/lazyset.go:57:23: can inline lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet.func2 with cost 7 as: func(go.shape.int) bool { lazyset.bs[lazyset.t] = struct {}{}; return true }
+./lazyset/lazyset.go:64:6: can inline lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]].Range with cost 62 as: method(lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]]) func(func(int) bool) { lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], lazyset.yield) }
+./lazyset/lazyset.go:33:6: cannot inline lazyset.LazySet[go.shape.int,go.shape.struct {}].Len: function too complex: cost 86 exceeds budget 80
+./lazyset/lazyset.go:35:10: can inline lazyset.LazySet[go.shape.int,go.shape.struct {}].Len.func1 with cost 5 as: func(go.shape.int) bool { lazyset.n++; return true }
+<autogenerated>:1: cannot inline type..eq.github.com/swonky/set/lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]]: marked go:noinline
+./lazyset/lazyset.go:78:6: can inline lazyset.LazySet[go.shape.int,go.shape.struct {}].Contains with cost 71 as: method(lazyset.LazySet[go.shape.int,go.shape.struct {}]) func(*[18]uintptr, go.shape.int) bool { return (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], go.shape.int) bool)(&lazyset..dict[1])(lazyset.s.op, lazyset.s.a, lazyset.s.b, lazyset.elem) }
+./ops.go:86:6: can inline set.Intersect[int] with cost 63 as: func([]base.SetLike[int]) *lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]] { return set.Intersect[go.shape.int](&set..dict.Intersect[int], set.sets) }
+./lazyset/lazyset.go:78:6: can inline lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]].Contains with cost 77 as: method(lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]]) func(int) bool { return lazyset.LazySet[go.shape.int,go.shape.struct {}].Contains(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], lazyset.elem) }
+./lazyset/lazyset.go:42:6: can inline lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]].AsSet with cost 62 as: method(lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]]) func() base.Set[int] { return lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]]) }
+./lazyset/lazyset.go:33:6: can inline lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]].Len with cost 62 as: method(lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]]) func() int { return lazyset.LazySet[go.shape.int,go.shape.struct {}].Len(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]]) }
+./ops.go:81:6: can inline set.Union[int] with cost 63 as: func([]base.SetLike[int]) *lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]] { return set.Union[go.shape.int](&set..dict.Union[int], set.sets) }
+./ops.go:83:20: inlining call to lazyset.New[go.shape.int,go.shape.struct {}]
+./ops.go:88:20: inlining call to lazyset.New[go.shape.int,go.shape.struct {}]
+./lazyset/lazyset.go:78:6: inlining call to lazyset.LazySet[go.shape.int,go.shape.struct {}].Contains
+<autogenerated>:1: inlining call to lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]].AsSet
+<autogenerated>:1: inlining call to lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]].Contains
+<autogenerated>:1: inlining call to lazyset.LazySet[go.shape.int,go.shape.struct {}].Contains
+<autogenerated>:1: inlining call to lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]].Len
+<autogenerated>:1: inlining call to lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]].Range
+<autogenerated>:1: inlining call to lazyset.LazySet[go.shape.int,go.shape.struct {}].Contains
+<autogenerated>:1: inlining call to lazyset.LazySet[int,github.com/swonky/set.UnionOp[int]].Range
+./ops.go:83:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap in Union[go.shape.int]:
+./ops.go:83:20:   flow: lazyset.acc ← &{storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}}:
+./ops.go:83:20:     from &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (spill) at ./ops.go:83:20
+./ops.go:83:20:     from lazyset.acc = &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (assign) at ./ops.go:83:20
+./ops.go:83:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap in Union[go.shape.int]:
+./ops.go:83:20:   flow: lazyset.acc ← &{storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}}:
+./ops.go:83:20:     from &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (spill) at ./ops.go:83:20
+./ops.go:83:20:     from lazyset.acc := &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (assign) at ./ops.go:83:20
+./ops.go:83:20:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← lazyset.acc:
+./ops.go:83:20:     from lazyset.acc (interface-converted) at ./ops.go:83:20
+./ops.go:83:20:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./ops.go:83:20
+./ops.go:81:26: parameter set.sets leaks to {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} for Union[go.shape.int] with derefs=1:
+./ops.go:81:26:   flow: lazyset.sets ← set.sets:
+./ops.go:81:26:     from lazyset..dict, lazyset.sets, lazyset.op := (*[7]uintptr)(set..dict[1]), set.sets, set.UnionOp[go.shape.int]{} (assign-pair) at ./ops.go:83:20
+./ops.go:81:26:   flow: {temp} ← lazyset.sets:
+./ops.go:81:26:     from lazyset.sets[2:] (slice) at ./ops.go:83:20
+./ops.go:81:26:   flow: lazyset.s ← *{temp}:
+./ops.go:81:26:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← lazyset.s:
+./ops.go:81:26:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./ops.go:83:20
+./ops.go:83:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap in Union[go.shape.int]:
+./ops.go:83:20:   flow: set.~r0 ← &{storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}}:
+./ops.go:83:20:     from &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (spill) at ./ops.go:83:20
+./ops.go:83:20:     from set.~r0 = &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (assign-pair) at ./ops.go:83:20
+./ops.go:81:26: parameter set.sets leaks to {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} for Union[go.shape.int] with derefs=1:
+./ops.go:81:26:   flow: lazyset.sets ← set.sets:
+./ops.go:81:26:     from lazyset..dict, lazyset.sets, lazyset.op := (*[7]uintptr)(set..dict[1]), set.sets, set.UnionOp[go.shape.int]{} (assign-pair) at ./ops.go:83:20
+./ops.go:81:26:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← *lazyset.sets:
+./ops.go:81:26:     from lazyset.sets[0] (dot of pointer) at ./ops.go:83:20
+./ops.go:81:26:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./ops.go:83:20
+./ops.go:81:26: parameter set.sets leaks to {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} for Union[go.shape.int] with derefs=1:
+./ops.go:81:26:   flow: lazyset.sets ← set.sets:
+./ops.go:81:26:     from lazyset..dict, lazyset.sets, lazyset.op := (*[7]uintptr)(set..dict[1]), set.sets, set.UnionOp[go.shape.int]{} (assign-pair) at ./ops.go:83:20
+./ops.go:81:26:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← *lazyset.sets:
+./ops.go:81:26:     from lazyset.sets[0] (dot of pointer) at ./ops.go:83:20
+./ops.go:81:26:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./ops.go:83:20
+./ops.go:83:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap
+./ops.go:83:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap
+./ops.go:83:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap
+./lazyset/lazyset.go:67:17: func literal escapes to heap in LazySet[go.shape.int,go.shape.struct {}].Range:
+./lazyset/lazyset.go:67:17:   flow: {heap} ← &{storage for func literal}:
+./lazyset/lazyset.go:67:17:     from func literal (spill) at ./lazyset/lazyset.go:67:17
+./lazyset/lazyset.go:67:17:     from lazyset.la.WithRLock(func literal) (call parameter) at ./lazyset/lazyset.go:67:16
+./lazyset/lazyset.go:68:18: func literal escapes to heap in LazySet[go.shape.int,go.shape.struct {}].Range.func1:
+./lazyset/lazyset.go:68:18:   flow: {heap} ← &{storage for func literal}:
+./lazyset/lazyset.go:68:18:     from func literal (spill) at ./lazyset/lazyset.go:68:18
+./lazyset/lazyset.go:68:18:     from lazyset.lb.WithRLock(func literal) (call parameter) at ./lazyset/lazyset.go:68:17
+./lazyset/lazyset.go:66:6: lazyset.LazySet[go.shape.int,go.shape.struct {}].Range capturing by value: lazyset.lb (addr=false assign=false width=16)
+./lazyset/lazyset.go:64:7: lazyset.LazySet[go.shape.int,go.shape.struct {}].Range capturing by value: lazyset.s (addr=false assign=false width=40)
+./lazyset/lazyset.go:64:30: lazyset.LazySet[go.shape.int,go.shape.struct {}].Range capturing by value: lazyset.yield (addr=false assign=false width=8)
+./lazyset/lazyset.go:64:6: lazyset.LazySet[go.shape.int,go.shape.struct {}].Range capturing by value: lazyset..dict (addr=false assign=false width=8)
+./lazyset/lazyset.go:64:7: lazyset.LazySet[go.shape.int,go.shape.struct {}].Range capturing by value: lazyset.s (addr=false assign=false width=40)
+./lazyset/lazyset.go:67:22: lazyset.LazySet[go.shape.int,go.shape.struct {}].Range.func1 capturing by value: lazyset.a2 (addr=false assign=false width=16)
+./lazyset/lazyset.go:64:30: lazyset.LazySet[go.shape.int,go.shape.struct {}].Range capturing by value: lazyset.yield (addr=false assign=false width=8)
+./lazyset/lazyset.go:64:6: lazyset.LazySet[go.shape.int,go.shape.struct {}].Range capturing by value: lazyset..dict (addr=false assign=false width=8)
+./lazyset/lazyset.go:67:22: parameter lazyset.a2 leaks to {heap} for LazySet[go.shape.int,go.shape.struct {}].Range.func1 with derefs=0:
+./lazyset/lazyset.go:67:22:   flow: {heap} ← lazyset.a2:
+./lazyset/lazyset.go:67:22:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&lazyset..dict[0])(lazyset.s.op, lazyset.a2, lazyset.b2, lazyset.yield) (call parameter) at ./lazyset/lazyset.go:69:16
+./lazyset/lazyset.go:68:23: parameter lazyset.b2 leaks to {heap} for LazySet[go.shape.int,go.shape.struct {}].Range.func1.1 with derefs=0:
+./lazyset/lazyset.go:68:23:   flow: {heap} ← lazyset.b2:
+./lazyset/lazyset.go:68:23:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&lazyset..dict[0])(lazyset.s.op, lazyset.a2, lazyset.b2, lazyset.yield) (call parameter) at ./lazyset/lazyset.go:69:16
+./lazyset/lazyset.go:64:30: parameter lazyset.yield leaks to {heap} for LazySet[go.shape.int,go.shape.struct {}].Range with derefs=0:
+./lazyset/lazyset.go:64:30:   flow: {heap} ← lazyset.yield:
+./lazyset/lazyset.go:64:30:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&lazyset..dict[0])(lazyset.s.op, lazyset.a2, lazyset.b2, lazyset.yield) (call parameter) at ./lazyset/lazyset.go:69:16
+./lazyset/lazyset.go:64:7: parameter lazyset.s leaks to {heap} for LazySet[go.shape.int,go.shape.struct {}].Range with derefs=0:
+./lazyset/lazyset.go:64:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:64:7:     from lazyset.s.a (dot) at ./lazyset/lazyset.go:75:14
+./lazyset/lazyset.go:64:7:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&lazyset..dict[0])(lazyset.s.op, lazyset.s.a, lazyset.s.b, lazyset.yield) (call parameter) at ./lazyset/lazyset.go:75:12
+./lazyset/lazyset.go:64:7: parameter lazyset.s leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].Range with derefs=0:
+./lazyset/lazyset.go:64:7:   flow: {storage for func literal} ← lazyset.s:
+./lazyset/lazyset.go:64:7:     from lazyset.s (captured by a closure) at ./lazyset/lazyset.go:69:6
+./lazyset/lazyset.go:67:22: parameter lazyset.a2 leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].Range.func1 with derefs=0:
+./lazyset/lazyset.go:67:22:   flow: {storage for func literal} ← lazyset.a2:
+./lazyset/lazyset.go:67:22:     from lazyset.a2 (captured by a closure) at ./lazyset/lazyset.go:69:17
+./lazyset/lazyset.go:64:30: parameter lazyset.yield leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].Range with derefs=0:
+./lazyset/lazyset.go:64:30:   flow: {storage for func literal} ← lazyset.yield:
+./lazyset/lazyset.go:64:30:     from lazyset.yield (captured by a closure) at ./lazyset/lazyset.go:69:25
+./lazyset/lazyset.go:64:6: parameter lazyset..dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].Range with derefs=0:
+./lazyset/lazyset.go:64:6:   flow: {storage for func literal} ← lazyset..dict:
+./lazyset/lazyset.go:64:6:     from lazyset..dict (captured by a closure) at ./lazyset/lazyset.go:64:6
+./lazyset/lazyset.go:64:7: parameter lazyset.s leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].Range with derefs=0:
+./lazyset/lazyset.go:64:7:   flow: {storage for func literal} ← lazyset.s:
+./lazyset/lazyset.go:64:7:     from lazyset.s (captured by a closure) at ./lazyset/lazyset.go:69:6
+./lazyset/lazyset.go:64:30: parameter lazyset.yield leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].Range with derefs=0:
+./lazyset/lazyset.go:64:30:   flow: {storage for func literal} ← lazyset.yield:
+./lazyset/lazyset.go:64:30:     from lazyset.yield (captured by a closure) at ./lazyset/lazyset.go:69:25
+./lazyset/lazyset.go:64:6: parameter lazyset..dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].Range with derefs=0:
+./lazyset/lazyset.go:64:6:   flow: {storage for func literal} ← lazyset..dict:
+./lazyset/lazyset.go:64:6:     from lazyset..dict (captured by a closure) at ./lazyset/lazyset.go:64:6
+./lazyset/lazyset.go:67:17: func literal escapes to heap
+./lazyset/lazyset.go:68:18: func literal escapes to heap
+./set_bench_test.go:50:8:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(ls, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], fn) (call parameter) at ./set_bench_test.go:60:12
+./lazyset/lazyset.go:46:17: func literal escapes to heap in LazySet[go.shape.int,go.shape.struct {}].AsSet:
+./lazyset/lazyset.go:46:17:   flow: {heap} ← &{storage for func literal}:
+./lazyset/lazyset.go:46:17:     from func literal (spill) at ./lazyset/lazyset.go:46:17
+./lazyset/lazyset.go:46:17:     from lazyset.la.WithRLock(func literal) (call parameter) at ./lazyset/lazyset.go:46:16
+./lazyset/lazyset.go:47:18: func literal escapes to heap in LazySet[go.shape.int,go.shape.struct {}].AsSet.func1:
+./lazyset/lazyset.go:47:18:   flow: {heap} ← &{storage for func literal}:
+./lazyset/lazyset.go:47:18:     from func literal (spill) at ./lazyset/lazyset.go:47:18
+./lazyset/lazyset.go:47:18:     from lazyset.lb.WithRLock(func literal) (call parameter) at ./lazyset/lazyset.go:47:17
+./lazyset/lazyset.go:48:25: func literal escapes to heap in LazySet[go.shape.int,go.shape.struct {}].AsSet.func1.1:
+./lazyset/lazyset.go:48:25:   flow: {heap} ← &{storage for func literal}:
+./lazyset/lazyset.go:48:25:     from func literal (spill) at ./lazyset/lazyset.go:48:25
+./lazyset/lazyset.go:48:25:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&lazyset..dict[0])(lazyset.s.op, lazyset.a2, lazyset.b2, func literal) (call parameter) at ./lazyset/lazyset.go:48:16
+./lazyset/lazyset.go:57:23: func literal escapes to heap in LazySet[go.shape.int,go.shape.struct {}].AsSet:
+./lazyset/lazyset.go:57:23:   flow: {heap} ← &{storage for func literal}:
+./lazyset/lazyset.go:57:23:     from func literal (spill) at ./lazyset/lazyset.go:57:23
+./lazyset/lazyset.go:57:23:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&lazyset..dict[0])(lazyset.s.op, lazyset.s.a, lazyset.s.b, func literal) (call parameter) at ./lazyset/lazyset.go:57:12
+./lazyset/lazyset.go:45:6: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet capturing by value: lazyset.lb (addr=false assign=false width=16)
+./lazyset/lazyset.go:42:7: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet capturing by value: lazyset.s (addr=false assign=false width=40)
+./lazyset/lazyset.go:43:2: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet capturing by value: lazyset.bs (addr=false assign=false width=8)
+./lazyset/lazyset.go:42:6: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet capturing by value: lazyset..dict (addr=false assign=false width=8)
+./lazyset/lazyset.go:42:7: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet capturing by value: lazyset.s (addr=false assign=false width=40)
+./lazyset/lazyset.go:46:22: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet.func1 capturing by value: lazyset.a2 (addr=false assign=false width=16)
+./lazyset/lazyset.go:43:2: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet capturing by value: lazyset.bs (addr=false assign=false width=8)
+./lazyset/lazyset.go:42:6: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet capturing by value: lazyset..dict (addr=false assign=false width=8)
+./lazyset/lazyset.go:43:2: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet capturing by value: lazyset.bs (addr=false assign=false width=8)
+./lazyset/lazyset.go:42:6: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet capturing by value: lazyset..dict (addr=false assign=false width=8)
+./lazyset/lazyset.go:43:2: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet capturing by value: lazyset.bs (addr=false assign=false width=8)
+./lazyset/lazyset.go:42:6: lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet capturing by value: lazyset..dict (addr=false assign=false width=8)
+./lazyset/lazyset.go:46:22: parameter lazyset.a2 leaks to {heap} for LazySet[go.shape.int,go.shape.struct {}].AsSet.func1 with derefs=0:
+./lazyset/lazyset.go:46:22:   flow: {heap} ← lazyset.a2:
+./lazyset/lazyset.go:46:22:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&lazyset..dict[0])(lazyset.s.op, lazyset.a2, lazyset.b2, func literal) (call parameter) at ./lazyset/lazyset.go:48:16
+./lazyset/lazyset.go:47:23: parameter lazyset.b2 leaks to {heap} for LazySet[go.shape.int,go.shape.struct {}].AsSet.func1.1 with derefs=0:
+./lazyset/lazyset.go:47:23:   flow: {heap} ← lazyset.b2:
+./lazyset/lazyset.go:47:23:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&lazyset..dict[0])(lazyset.s.op, lazyset.a2, lazyset.b2, func literal) (call parameter) at ./lazyset/lazyset.go:48:16
+./lazyset/lazyset.go:42:7: parameter lazyset.s leaks to {heap} for LazySet[go.shape.int,go.shape.struct {}].AsSet with derefs=0:
+./lazyset/lazyset.go:42:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:42:7:     from lazyset.s.a (dot) at ./lazyset/lazyset.go:57:14
+./lazyset/lazyset.go:42:7:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], func(go.shape.int) bool))(&lazyset..dict[0])(lazyset.s.op, lazyset.s.a, lazyset.s.b, func literal) (call parameter) at ./lazyset/lazyset.go:57:12
+./lazyset/lazyset.go:42:6: parameter lazyset..dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].AsSet with derefs=0:
+./lazyset/lazyset.go:42:6:   flow: {storage for func literal} ← lazyset..dict:
+./lazyset/lazyset.go:42:6:     from lazyset..dict (captured by a closure) at ./lazyset/lazyset.go:42:6
+./lazyset/lazyset.go:43:12: make(base.Set[go.shape.int]) escapes to heap in LazySet[go.shape.int,go.shape.struct {}].AsSet:
+./lazyset/lazyset.go:43:12:   flow: lazyset.bs ← &{storage for make(base.Set[go.shape.int])}:
+./lazyset/lazyset.go:43:12:     from make(base.Set[go.shape.int]) (spill) at ./lazyset/lazyset.go:43:12
+./lazyset/lazyset.go:43:12:     from lazyset.bs := make(base.Set[go.shape.int]) (assign) at ./lazyset/lazyset.go:43:5
+./lazyset/lazyset.go:43:12:   flow: {storage for func literal} ← lazyset.bs:
+./lazyset/lazyset.go:43:12:     from lazyset.bs (captured by a closure) at ./lazyset/lazyset.go:58:3
+./lazyset/lazyset.go:42:6: parameter lazyset..dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].AsSet with derefs=0:
+./lazyset/lazyset.go:42:6:   flow: {storage for func literal} ← lazyset..dict:
+./lazyset/lazyset.go:42:6:     from lazyset..dict (captured by a closure) at ./lazyset/lazyset.go:42:6
+./lazyset/lazyset.go:42:7: parameter lazyset.s leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].AsSet with derefs=0:
+./lazyset/lazyset.go:42:7:   flow: {storage for func literal} ← lazyset.s:
+./lazyset/lazyset.go:42:7:     from lazyset.s (captured by a closure) at ./lazyset/lazyset.go:48:6
+./lazyset/lazyset.go:46:22: parameter lazyset.a2 leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].AsSet.func1 with derefs=0:
+./lazyset/lazyset.go:46:22:   flow: {storage for func literal} ← lazyset.a2:
+./lazyset/lazyset.go:46:22:     from lazyset.a2 (captured by a closure) at ./lazyset/lazyset.go:48:17
+./lazyset/lazyset.go:42:6: parameter lazyset..dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].AsSet with derefs=0:
+./lazyset/lazyset.go:42:6:   flow: {storage for func literal} ← lazyset..dict:
+./lazyset/lazyset.go:42:6:     from lazyset..dict (captured by a closure) at ./lazyset/lazyset.go:42:6
+./lazyset/lazyset.go:42:7: parameter lazyset.s leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].AsSet with derefs=0:
+./lazyset/lazyset.go:42:7:   flow: {storage for func literal} ← lazyset.s:
+./lazyset/lazyset.go:42:7:     from lazyset.s (captured by a closure) at ./lazyset/lazyset.go:48:6
+./lazyset/lazyset.go:42:6: parameter lazyset..dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].AsSet with derefs=0:
+./lazyset/lazyset.go:42:6:   flow: {storage for func literal} ← lazyset..dict:
+./lazyset/lazyset.go:42:6:     from lazyset..dict (captured by a closure) at ./lazyset/lazyset.go:42:6
+./lazyset/lazyset.go:43:12: make(base.Set[go.shape.int]) escapes to heap
+./lazyset/lazyset.go:46:17: func literal escapes to heap
+./lazyset/lazyset.go:47:18: func literal escapes to heap
+./lazyset/lazyset.go:48:25: func literal escapes to heap
+./lazyset/lazyset.go:57:23: func literal escapes to heap
+./ops.go:88:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap in Intersect[go.shape.int]:
+./ops.go:88:20:   flow: lazyset.acc ← &{storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}}:
+./ops.go:88:20:     from &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (spill) at ./ops.go:88:20
+./ops.go:88:20:     from lazyset.acc = &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (assign) at ./ops.go:88:20
+./ops.go:88:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap in Intersect[go.shape.int]:
+./ops.go:88:20:   flow: lazyset.acc ← &{storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}}:
+./ops.go:88:20:     from &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (spill) at ./ops.go:88:20
+./ops.go:88:20:     from lazyset.acc := &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (assign) at ./ops.go:88:20
+./ops.go:88:20:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← lazyset.acc:
+./ops.go:88:20:     from lazyset.acc (interface-converted) at ./ops.go:88:20
+./ops.go:88:20:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./ops.go:88:20
+./ops.go:86:30: parameter set.sets leaks to {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} for Intersect[go.shape.int] with derefs=1:
+./ops.go:86:30:   flow: lazyset.sets ← set.sets:
+./ops.go:86:30:     from lazyset..dict, lazyset.sets, lazyset.op := (*[7]uintptr)(set..dict[1]), set.sets, set.UnionOp[go.shape.int]{} (assign-pair) at ./ops.go:88:20
+./ops.go:86:30:   flow: {temp} ← lazyset.sets:
+./ops.go:86:30:     from lazyset.sets[2:] (slice) at ./ops.go:88:20
+./ops.go:86:30:   flow: lazyset.s ← *{temp}:
+./ops.go:86:30:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← lazyset.s:
+./ops.go:86:30:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./ops.go:88:20
+./ops.go:88:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap in Intersect[go.shape.int]:
+./ops.go:88:20:   flow: set.~r0 ← &{storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}}:
+./ops.go:88:20:     from &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (spill) at ./ops.go:88:20
+./ops.go:88:20:     from set.~r0 = &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (assign-pair) at ./ops.go:88:20
+./ops.go:86:30: parameter set.sets leaks to {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} for Intersect[go.shape.int] with derefs=1:
+./ops.go:86:30:   flow: lazyset.sets ← set.sets:
+./ops.go:86:30:     from lazyset..dict, lazyset.sets, lazyset.op := (*[7]uintptr)(set..dict[1]), set.sets, set.UnionOp[go.shape.int]{} (assign-pair) at ./ops.go:88:20
+./ops.go:86:30:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← *lazyset.sets:
+./ops.go:86:30:     from lazyset.sets[0] (dot of pointer) at ./ops.go:88:20
+./ops.go:86:30:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./ops.go:88:20
+./ops.go:86:30: parameter set.sets leaks to {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} for Intersect[go.shape.int] with derefs=1:
+./ops.go:86:30:   flow: lazyset.sets ← set.sets:
+./ops.go:86:30:     from lazyset..dict, lazyset.sets, lazyset.op := (*[7]uintptr)(set..dict[1]), set.sets, set.UnionOp[go.shape.int]{} (assign-pair) at ./ops.go:88:20
+./ops.go:86:30:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← *lazyset.sets:
+./ops.go:86:30:     from lazyset.sets[0] (dot of pointer) at ./ops.go:88:20
+./ops.go:86:30:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./ops.go:88:20
+./ops.go:88:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap
+./ops.go:88:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap
+./ops.go:88:20: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap
+./lazyset/lazyset.go:64:7: parameter lazyset.s leaks to {heap} for LazySet[int,github.com/swonky/set.UnionOp[int]].Range with derefs=0:
+./lazyset/lazyset.go:64:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:64:7:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], lazyset.yield) (call parameter) at ./lazyset/lazyset.go:64:6
+./lazyset/lazyset.go:64:30: parameter lazyset.yield leaks to {heap} for LazySet[int,github.com/swonky/set.UnionOp[int]].Range with derefs=0:
+./lazyset/lazyset.go:64:30:   flow: {heap} ← lazyset.yield:
+./lazyset/lazyset.go:64:30:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], lazyset.yield) (call parameter) at ./lazyset/lazyset.go:64:6
+./set_bench_test.go:107:8:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(ls, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], fn) (call parameter) at ./set_bench_test.go:116:12
+./set_test.go:84:16:     from (*testing.common).Fatalf(t.common, "unexpected union: %v", ... argument...) (call parameter) at ./set_test.go:91:11
+./lazyset/lazyset.go:35:10: func literal escapes to heap in LazySet[go.shape.int,go.shape.struct {}].Len:
+./lazyset/lazyset.go:35:10:   flow: {heap} ← &{storage for func literal}:
+./lazyset/lazyset.go:35:10:     from func literal (spill) at ./lazyset/lazyset.go:35:10
+./lazyset/lazyset.go:35:10:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, (*[18]uintptr)(lazyset..dict[2]), func literal) (call parameter) at ./lazyset/lazyset.go:35:9
+./lazyset/lazyset.go:34:2: lazyset.LazySet[go.shape.int,go.shape.struct {}].Len capturing by ref: lazyset.n (addr=false assign=true width=8)
+./lazyset/lazyset.go:34:2: lazyset.n escapes to heap in LazySet[go.shape.int,go.shape.struct {}].Len:
+./lazyset/lazyset.go:34:2:   flow: {storage for func literal} ← &lazyset.n:
+./lazyset/lazyset.go:34:2:     from lazyset.n (captured by a closure) at ./lazyset/lazyset.go:36:3
+./lazyset/lazyset.go:34:2:     from lazyset.n (reference) at ./lazyset/lazyset.go:36:3
+./lazyset/lazyset.go:33:6: lazyset.LazySet[go.shape.int,go.shape.struct {}].Len capturing by value: lazyset..dict (addr=false assign=false width=8)
+./lazyset/lazyset.go:33:7: parameter lazyset.s leaks to {heap} for LazySet[go.shape.int,go.shape.struct {}].Len with derefs=0:
+./lazyset/lazyset.go:33:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:33:7:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, (*[18]uintptr)(lazyset..dict[2]), func literal) (call parameter) at ./lazyset/lazyset.go:35:9
+./lazyset/lazyset.go:33:6: parameter lazyset..dict leaks to {storage for func literal} for LazySet[go.shape.int,go.shape.struct {}].Len with derefs=0:
+./lazyset/lazyset.go:33:6:   flow: {storage for func literal} ← lazyset..dict:
+./lazyset/lazyset.go:33:6:     from lazyset..dict (captured by a closure) at ./lazyset/lazyset.go:33:6
+./lazyset/lazyset.go:34:2: moved to heap: lazyset.n
+./lazyset/lazyset.go:35:10: func literal escapes to heap
+./lazyset/lazyset.go:28:9: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap in New[go.shape.int,go.shape.struct {}]:
+./lazyset/lazyset.go:28:9:   flow: lazyset.acc ← &{storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}}:
+./lazyset/lazyset.go:28:9:     from &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (spill) at ./lazyset/lazyset.go:28:9
+./lazyset/lazyset.go:28:9:     from lazyset.acc = &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (assign) at ./lazyset/lazyset.go:28:7
+./lazyset/lazyset.go:26:9: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap in New[go.shape.int,go.shape.struct {}]:
+./lazyset/lazyset.go:26:9:   flow: lazyset.acc ← &{storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}}:
+./lazyset/lazyset.go:26:9:     from &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (spill) at ./lazyset/lazyset.go:26:9
+./lazyset/lazyset.go:26:9:     from lazyset.acc := &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (assign) at ./lazyset/lazyset.go:26:6
+./lazyset/lazyset.go:26:9:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← lazyset.acc:
+./lazyset/lazyset.go:26:9:     from lazyset.acc (interface-converted) at ./lazyset/lazyset.go:28:27
+./lazyset/lazyset.go:26:9:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./lazyset/lazyset.go:28:23
+./lazyset/lazyset.go:20:2: parameter lazyset.sets leaks to {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} for New[go.shape.int,go.shape.struct {}] with derefs=1:
+./lazyset/lazyset.go:20:2:   flow: {temp} ← lazyset.sets:
+./lazyset/lazyset.go:20:2:     from lazyset.sets[2:] (slice) at ./lazyset/lazyset.go:27:24
+./lazyset/lazyset.go:20:2:   flow: lazyset.s ← *{temp}:
+./lazyset/lazyset.go:20:2:     from for loop (range-deref) at ./lazyset/lazyset.go:27:14
+./lazyset/lazyset.go:20:2:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← lazyset.s:
+./lazyset/lazyset.go:20:2:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./lazyset/lazyset.go:28:23
+./lazyset/lazyset.go:24:10: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap in New[go.shape.int,go.shape.struct {}]:
+./lazyset/lazyset.go:24:10:   flow: lazyset.~r0 ← &{storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}}:
+./lazyset/lazyset.go:24:10:     from &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (spill) at ./lazyset/lazyset.go:24:10
+./lazyset/lazyset.go:24:10:     from return &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (return) at ./lazyset/lazyset.go:24:3
+./lazyset/lazyset.go:20:2: parameter lazyset.sets leaks to {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} for New[go.shape.int,go.shape.struct {}] with derefs=1:
+./lazyset/lazyset.go:20:2:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← *lazyset.sets:
+./lazyset/lazyset.go:20:2:     from lazyset.sets[0] (dot of pointer) at ./lazyset/lazyset.go:24:32
+./lazyset/lazyset.go:20:2:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./lazyset/lazyset.go:24:24
+./lazyset/lazyset.go:20:2: parameter lazyset.sets leaks to {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} for New[go.shape.int,go.shape.struct {}] with derefs=1:
+./lazyset/lazyset.go:20:2:   flow: {storage for &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...}} ← *lazyset.sets:
+./lazyset/lazyset.go:20:2:     from lazyset.sets[0] (dot of pointer) at ./lazyset/lazyset.go:26:31
+./lazyset/lazyset.go:20:2:     from lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} (struct literal element) at ./lazyset/lazyset.go:26:23
+./lazyset/lazyset.go:24:10: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap
+./lazyset/lazyset.go:26:9: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap
+./lazyset/lazyset.go:28:9: &lazyset.LazySet[go.shape.int,go.shape.struct {}]{...} escapes to heap
+./lazyset/lazyset.go:78:7: parameter lazyset.s leaks to {heap} for LazySet[go.shape.int,go.shape.struct {}].Contains with derefs=0:
+./lazyset/lazyset.go:78:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:78:7:     from lazyset.s.a (dot) at ./lazyset/lazyset.go:79:24
+./lazyset/lazyset.go:78:7:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], go.shape.int) bool)(&lazyset..dict[1])(lazyset.s.op, lazyset.s.a, lazyset.s.b, lazyset.elem) (call parameter) at ./lazyset/lazyset.go:79:22
+./lazyset/lazyset.go:78:7: parameter lazyset.s leaks to {heap} for LazySet[int,github.com/swonky/set.UnionOp[int]].Contains with derefs=0:
+./lazyset/lazyset.go:78:7:   flow: lazyset.s ← lazyset.s:
+./lazyset/lazyset.go:78:7:     from lazyset.s, lazyset..dict, lazyset.elem := lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], lazyset.elem (assign-pair) at ./lazyset/lazyset.go:78:6
+./lazyset/lazyset.go:78:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:78:7:     from lazyset.s.a (dot) at ./lazyset/lazyset.go:78:6
+./lazyset/lazyset.go:78:7:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], go.shape.int) bool)(&lazyset..dict[1])(lazyset.s.op, lazyset.s.a, lazyset.s.b, lazyset.elem) (call parameter) at ./lazyset/lazyset.go:78:6
+./lazyset/lazyset.go:42:7: parameter lazyset.s leaks to {heap} for LazySet[int,github.com/swonky/set.UnionOp[int]].AsSet with derefs=0:
+./lazyset/lazyset.go:42:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:42:7:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]]) (call parameter) at ./lazyset/lazyset.go:42:6
+./lazyset/lazyset.go:33:7: parameter lazyset.s leaks to {heap} for LazySet[int,github.com/swonky/set.UnionOp[int]].Len with derefs=0:
+./lazyset/lazyset.go:33:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:33:7:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Len(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]]) (call parameter) at ./lazyset/lazyset.go:33:6
+./lazyset/lazyset.go:42:7: parameter lazyset.s leaks to {heap} for (*LazySet[int,github.com/swonky/set.UnionOp[int]]).AsSet with derefs=1:
+./lazyset/lazyset.go:42:7:   flow: lazyset.s ← *lazyset.s:
+./lazyset/lazyset.go:42:7:     from lazyset.s (indirection) at <autogenerated>:1
+./lazyset/lazyset.go:42:7:     from lazyset.s := lazyset.s (assign-pair) at <autogenerated>:1
+./lazyset/lazyset.go:42:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:42:7:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]]) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:78:7: parameter lazyset.s leaks to {heap} for (*LazySet[int,github.com/swonky/set.UnionOp[int]]).Contains with derefs=1:
+./lazyset/lazyset.go:78:7:   flow: lazyset.s ← *lazyset.s:
+./lazyset/lazyset.go:78:7:     from lazyset.s (indirection) at <autogenerated>:1
+./lazyset/lazyset.go:78:7:     from lazyset.s, lazyset.elem := lazyset.s, lazyset.elem (assign-pair) at <autogenerated>:1
+./lazyset/lazyset.go:78:7:   flow: lazyset.s ← lazyset.s:
+./lazyset/lazyset.go:78:7:     from lazyset.s, lazyset..dict, lazyset.elem := lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], lazyset.elem (assign-pair) at <autogenerated>:1
+./lazyset/lazyset.go:78:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:78:7:     from lazyset.s.a (dot) at <autogenerated>:1
+./lazyset/lazyset.go:78:7:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], go.shape.int) bool)(&lazyset..dict[1])(lazyset.s.op, lazyset.s.a, lazyset.s.b, lazyset.elem) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:33:7: parameter lazyset.s leaks to {heap} for (*LazySet[int,github.com/swonky/set.UnionOp[int]]).Len with derefs=1:
+./lazyset/lazyset.go:33:7:   flow: lazyset.s ← *lazyset.s:
+./lazyset/lazyset.go:33:7:     from lazyset.s (indirection) at <autogenerated>:1
+./lazyset/lazyset.go:33:7:     from lazyset.s := lazyset.s (assign-pair) at <autogenerated>:1
+./lazyset/lazyset.go:33:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:33:7:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Len(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]]) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:64:7: parameter lazyset.s leaks to {heap} for (*LazySet[int,github.com/swonky/set.UnionOp[int]]).Range with derefs=1:
+./lazyset/lazyset.go:64:7:   flow: lazyset.s ← *lazyset.s:
+./lazyset/lazyset.go:64:7:     from lazyset.s (indirection) at <autogenerated>:1
+./lazyset/lazyset.go:64:7:     from lazyset.s, lazyset.yield := lazyset.s, lazyset.yield (assign-pair) at <autogenerated>:1
+./lazyset/lazyset.go:64:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:64:7:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], lazyset.yield) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:64:30: parameter lazyset.yield leaks to {heap} for (*LazySet[int,github.com/swonky/set.UnionOp[int]]).Range with derefs=0:
+./lazyset/lazyset.go:64:30:   flow: lazyset.yield ← lazyset.yield:
+./lazyset/lazyset.go:64:30:     from lazyset.s, lazyset.yield := lazyset.s, lazyset.yield (assign-pair) at <autogenerated>:1
+./lazyset/lazyset.go:64:30:   flow: {heap} ← lazyset.yield:
+./lazyset/lazyset.go:64:30:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], lazyset.yield) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:42:7: parameter lazyset.s leaks to {heap} for (*LazySet[go.shape.int,go.shape.struct {}]).AsSet with derefs=1:
+./lazyset/lazyset.go:42:7:   flow: {heap} ← *lazyset.s:
+./lazyset/lazyset.go:42:7:     from lazyset.s (indirection) at <autogenerated>:1
+./lazyset/lazyset.go:42:7:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet(lazyset.s, lazyset..dict) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:42:6: parameter lazyset..dict leaks to {heap} for (*LazySet[go.shape.int,go.shape.struct {}]).AsSet with derefs=0:
+./lazyset/lazyset.go:42:6:   flow: {heap} ← lazyset..dict:
+./lazyset/lazyset.go:42:6:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].AsSet(lazyset.s, lazyset..dict) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:78:7: parameter lazyset.s leaks to {heap} for (*LazySet[go.shape.int,go.shape.struct {}]).Contains with derefs=1:
+./lazyset/lazyset.go:78:7:   flow: lazyset.s ← *lazyset.s:
+./lazyset/lazyset.go:78:7:     from lazyset.s (indirection) at <autogenerated>:1
+./lazyset/lazyset.go:78:7:     from lazyset.s, lazyset..dict, lazyset.elem := lazyset.s, lazyset..dict, lazyset.elem (assign-pair) at <autogenerated>:1
+./lazyset/lazyset.go:78:7:   flow: {heap} ← lazyset.s:
+./lazyset/lazyset.go:78:7:     from lazyset.s.a (dot) at <autogenerated>:1
+./lazyset/lazyset.go:78:7:     from (func(go.shape.struct {}, base.SetLike[go.shape.int], base.SetLike[go.shape.int], go.shape.int) bool)(&lazyset..dict[1])(lazyset.s.op, lazyset.s.a, lazyset.s.b, lazyset.elem) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:33:7: parameter lazyset.s leaks to {heap} for (*LazySet[go.shape.int,go.shape.struct {}]).Len with derefs=1:
+./lazyset/lazyset.go:33:7:   flow: {heap} ← *lazyset.s:
+./lazyset/lazyset.go:33:7:     from lazyset.s (indirection) at <autogenerated>:1
+./lazyset/lazyset.go:33:7:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Len(lazyset.s, lazyset..dict) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:33:6: parameter lazyset..dict leaks to {heap} for (*LazySet[go.shape.int,go.shape.struct {}]).Len with derefs=0:
+./lazyset/lazyset.go:33:6:   flow: {heap} ← lazyset..dict:
+./lazyset/lazyset.go:33:6:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Len(lazyset.s, lazyset..dict) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:64:7: parameter lazyset.s leaks to {heap} for (*LazySet[go.shape.int,go.shape.struct {}]).Range with derefs=1:
+./lazyset/lazyset.go:64:7:   flow: {heap} ← *lazyset.s:
+./lazyset/lazyset.go:64:7:     from lazyset.s (indirection) at <autogenerated>:1
+./lazyset/lazyset.go:64:7:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, lazyset..dict, lazyset.yield) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:64:6: parameter lazyset..dict leaks to {heap} for (*LazySet[go.shape.int,go.shape.struct {}]).Range with derefs=0:
+./lazyset/lazyset.go:64:6:   flow: {heap} ← lazyset..dict:
+./lazyset/lazyset.go:64:6:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, lazyset..dict, lazyset.yield) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:64:30: parameter lazyset.yield leaks to {heap} for (*LazySet[go.shape.int,go.shape.struct {}]).Range with derefs=0:
+./lazyset/lazyset.go:64:30:   flow: {heap} ← lazyset.yield:
+./lazyset/lazyset.go:64:30:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, lazyset..dict, lazyset.yield) (call parameter) at <autogenerated>:1
+<autogenerated>:1:   flow: lazyset.s ← .this:
+<autogenerated>:1:     from lazyset.s, lazyset.yield := .this, lazyset.yield (assign-pair) at <autogenerated>:1
+<autogenerated>:1:   flow: {heap} ← lazyset.s:
+<autogenerated>:1:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], lazyset.yield) (call parameter) at <autogenerated>:1
+./lazyset/lazyset.go:64:30: parameter lazyset.yield leaks to {heap} for LazySet[int,github.com/swonky/set.UnionOp[int]].Range-fm with derefs=0:
+./lazyset/lazyset.go:64:30:   flow: lazyset.yield ← lazyset.yield:
+./lazyset/lazyset.go:64:30:     from lazyset.s, lazyset.yield := .this, lazyset.yield (assign-pair) at <autogenerated>:1
+./lazyset/lazyset.go:64:30:   flow: {heap} ← lazyset.yield:
+./lazyset/lazyset.go:64:30:     from lazyset.LazySet[go.shape.int,go.shape.struct {}].Range(lazyset.s, &lazyset..dict.LazySet[int,github.com/swonky/set.UnionOp[int]], lazyset.yield) (call parameter) at <autogenerated>:1
+?   	github.com/swonky/set/lazyset	[no test files]

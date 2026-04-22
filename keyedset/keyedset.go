@@ -8,29 +8,27 @@ import (
 
 var _ base.SetLike[Keyed] = KeyedSet[Keyed]{}
 
-type Key uint64
-
-type Keyed interface{ Key() Key }
+type Keyed interface{ Key() uint64 }
 
 type KeyedSet[T any] struct {
-	smap map[Key]T
-	fn   func(T) Key
+	smap map[uint64]T
+	fn   func(T) uint64
 }
 
-func defaultKeyFunc[T Keyed](t T) Key {
+func defaultKeyFunc[T Keyed](t T) uint64 {
 	return t.Key()
 }
 
 // -- Constructors --
 
-func WithCustom[T any](fn func(T) Key, cap ...int) KeyedSet[T] {
+func WithCustom[T any](fn func(T) uint64, cap ...int) KeyedSet[T] {
 	return KeyedSet[T]{
-		smap: make(map[Key]T, base.GetCap(cap...)),
+		smap: make(map[uint64]T, base.GetCap(cap...)),
 		fn:   fn,
 	}
 }
 
-func FromWithCustom[T any](fn func(T) Key, elems []T) KeyedSet[T] {
+func FromWithCustom[T any](fn func(T) uint64, elems []T) KeyedSet[T] {
 	m := WithCustom(fn, len(elems))
 	for _, v := range elems {
 		m.Add(v)
@@ -42,19 +40,19 @@ func New[T Keyed](cap ...int) KeyedSet[T] {
 	return WithCustom(defaultKeyFunc[T], cap[0])
 }
 
-func From[T Keyed](elems []T) KeyedSet[T] {
+func FromSlice[S ~[]T, T Keyed](elems S) KeyedSet[T] {
 	return FromWithCustom(defaultKeyFunc[T], elems)
 }
 
 // -- Unique methods --
 
 // Identify returns the key for a provided element.
-func (ks KeyedSet[T]) Identify(elem T) Key {
+func (ks KeyedSet[T]) Identify(elem T) uint64 {
 	return ks.fn(elem)
 }
 
 // ContainsKey returns true if there is the key is present in the set.
-func (ks KeyedSet[T]) ContainsKey(k Key) bool {
+func (ks KeyedSet[T]) ContainsKey(k uint64) bool {
 	_, ok := ks.smap[k]
 	return ok
 }

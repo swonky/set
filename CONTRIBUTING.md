@@ -1,3 +1,17 @@
+
+## Project philosophy
+
+A set is easy to write until it needs to be good.
+
+Anyone can throw together `map[T]struct{}`, and for many cases that is enough. The point of `set` is not to make the trivial possible. It is to make the common useful cases ergonomic, consistent, and cheap.
+
+Go has plenty of developers who do not care about allocations until they suddenly have to. This project is for the moment after that. The package aims to provide familiar set operations and practical collection semantics with straightforward Go-style APIs, while keeping unnecessary heap traffic and overhead out of hot paths.
+
+Writing a set is simple. Writing one that behaves well around the compiler, allocator, garbage collector, iteration costs, concurrency, and real workloads is less simple.
+
+`set` exists to handle that part without making users think about it.
+
+
 ## Comment style guide
 
 Go documentation is intentionally unstructured, which keeps it lightweight but often results in inconsistent and harder-to-scan comments. 
