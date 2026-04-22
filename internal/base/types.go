@@ -6,15 +6,15 @@ type SetLike[T any] interface {
 	Len() int
 }
 
-type ValueSet[T comparable] interface {
-	SetLike[T]
-}
-
 type MutableSet[T any] interface {
 	SetLike[T]
 
 	Add(T)
 	Delete(T)
+}
+
+type ValueSet[T comparable] interface {
+	SetLike[T]
 }
 
 type LockableSet[T any] interface {
@@ -31,7 +31,7 @@ type MutableLockableSet[T any] interface {
 }
 
 type AsSetter[T comparable] interface {
-	AsSet() Set[T]
+	Set() Set[T]
 }
 
 type Snapshotable[T any] interface {
