@@ -1,12 +1,10 @@
-package lazyset
+package set
 
-import "github.com/swonky/set/internal/base"
-
-func NewUnion[S base.SetLike[T], T comparable](sets []S) Union[S, T] {
+func Unite[S SetLike[T], T comparable](sets ...S) Union[S, T] {
 	return Union[S, T]{sets: append(make([]S, 0, len(sets)), sets...)}
 }
 
-type Union[S base.SetLike[T], T any] struct {
+type Union[S SetLike[T], T any] struct {
 	sets []S
 }
 

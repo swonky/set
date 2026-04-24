@@ -3,10 +3,11 @@ package keyedset
 import (
 	"maps"
 
+	"github.com/swonky/set"
 	"github.com/swonky/set/internal/base"
 )
 
-var _ base.SetLike[Keyed] = KeyedSet[Keyed]{}
+var _ set.SetLike[Keyed] = KeyedSet[Keyed]{}
 
 type Keyed interface{ Key() uint64 }
 

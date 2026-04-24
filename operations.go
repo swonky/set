@@ -3,8 +3,6 @@ package set
 import (
 	"iter"
 	"slices"
-
-	"github.com/swonky/set/lazyset"
 )
 
 func CopyInto[T comparable](dst MutableSet[T], src SetLike[T]) {
@@ -62,21 +60,24 @@ func GroupBy[T, C comparable](s SetLike[T], pred func(T) C) map[C]Set[T] {
 	return r
 }
 
-// Transform returns an iterator that yields fn(k) for each element k in s.
+// Transform replaces each element in ms with fn(elem).
+// If multiple elements produce the same result, duplicates are discarded.
 //
-// The transformation is applied lazily during iteration and does not allocate
-// an intermediate collection.
+// For lockable sets, Transform holds an exclusive lock for the duration
+// of the operation.
 //
-// Unlike Transform, duplicate results are not removed. If multiple elements map
-// to the same value, duplicates will be yielded. Iteration order is not
-// guaranteed.
-//
-// Transform panics if fn is nil.
-func Transform[S, D comparable](s SetLike[S], fn func(S) D) iter.Seq[D] {
+// fn must not be nil and must not call methods on ms.
+// If fn panics, ms may be left partially transformed.
+func Transform[MS MutableSet[T], T any](ms MS, fn func(T) T) {
 	if fn == nil {
 		panic("nil function")
 	}
-	return func(yield func(D) bool) { s.Range(func(s S) bool { return yield(fn(s)) }) }
+	WithWrite(ms, func(ms2 MS) struct{} {
+		for elem := range Consume(ms2) {
+			ms2.Add(fn(elem))
+		}
+		return struct{}{}
+	})
 }
 
 // TransformInto maps fn to each element of src and adds the result to dst.
@@ -95,14 +96,6 @@ func TransformInto[S, D comparable](dst MutableSet[D], src SetLike[S], fn func(S
 			return struct{}{}
 		},
 	)
-}
-
-func Intersect[T comparable](sets ...SetLike[T]) Intersection[SetLike[T], T] {
-	return lazyset.NewIntersection(sets)
-}
-
-func Unite[T comparable](sets ...SetLike[T]) Union[SetLike[T], T] {
-	return lazyset.NewUnion(sets)
 }
 
 // All reports whether all elements satisfy fn.
@@ -244,8 +237,56 @@ func op[T any, R any](s SetLike[T], fn func(SetLike[T]) R) R {
 	return fn(s)
 }
 
+func WithRead[S SetLike[T], T, R any](s S, fn func(SetLike[T]) R) R {
+	if l, ok := SetLike[T](s).(LockableSet[T]); ok {
+		var r R
+		l.WithRLock(func(s2 SetLike[T]) {
+			r = fn(s2)
+		})
+		return r
+	}
+	return fn(s)
+}
+
+func WithWrite[S SetLike[T], T, R any](s S, fn func(S) R) R {
+	if l, ok := SetLike[T](s).(LockableSet[T]); ok {
+		var r R
+		l.WithRLock(func(s2 SetLike[T]) { r = fn(s2.(S)) })
+		return r
+	}
+	return fn(s)
+}
+
+// type ReadOperation[S SetLike[T], T any, R any] struct {
+// 	s S
+// 	fn func(SetLike[T]) R
+// }
+
+// func (v *Operation[S, T, R]) Run() {
+// 	if l, ok := v.s.(LockableSet[T]); ok {
+// 		var r R
+// 		l.WithRLock(func(s2 SetLike[T]) {
+// 			r = fn(s2)
+// 		})
+// 		return r
+// 	}
+// 	return fn(s)
+// }
+
+// func (v *View) Write[T any, R any](s MutableSet[T], fn func(MutableSet[T]) R) R {
+// 	if l, ok := s.(LockableSet[T]); ok {
+// 		var r R
+// 		l.WithLock(func(s2 MutableSet[T]) {
+// 			r = fn(s2)
+// 		})
+// 		return r
+// 	}
+// 	return fn(s)
+// }
+
 func op2[A any, B any, R any](
-	a SetLike[A], b SetLike[B],
+	a SetLike[A],
+	b SetLike[B],
 	fn func(a SetLike[A], b SetLike[B]) R,
 ) R {
 	if la, ok := a.(LockableSet[A]); ok {

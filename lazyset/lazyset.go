@@ -1,23 +1,21 @@
 package lazyset
 
-import (
-	"github.com/swonky/set/internal/base"
-)
+import "github.com/swonky/set"
 
-var _ base.SetLike[int] = LazySet[int, BinaryOp[int]]{}
+var _ set.SetLike[int] = LazySet[int, BinaryOp[int]]{}
 
 type BinaryOp[T any] interface {
-	Range(a, b base.SetLike[T], yield func(T) bool)
-	Contains(a, b base.SetLike[T], elem T) bool
+	Range(a, b set.SetLike[T], yield func(T) bool)
+	Contains(a, b set.SetLike[T], elem T) bool
 }
 
 type LazySet[T comparable, B BinaryOp[T]] struct {
-	a, b base.SetLike[T]
+	a, b set.SetLike[T]
 	op   B
 }
 
 func New[T comparable, B BinaryOp[T]](
-	sets []base.SetLike[T],
+	sets []set.SetLike[T],
 	op B,
 ) *LazySet[T, B] {
 	if len(sets) == 1 {
@@ -39,8 +37,8 @@ func (s LazySet[T, B]) Len() int {
 	return n
 }
 
-func (s LazySet[T, B]) AsSet() base.Set[T] {
-	bs := make(base.Set[T])
+func (s LazySet[T, B]) AsSet() set.Set[T] {
+	bs := make(set.Set[T])
 	s.Range(func(t T) bool {
 		bs[t] = struct{}{}
 		return true
@@ -48,8 +46,8 @@ func (s LazySet[T, B]) AsSet() base.Set[T] {
 	return bs
 }
 
-func (s LazySet[T, B]) AsSet2() base.Set[T] {
-	bs := make(base.Set[T], s.Len())
+func (s LazySet[T, B]) AsSet2() set.Set[T] {
+	bs := make(set.Set[T], s.Len())
 	s.Range(func(t T) bool {
 		bs[t] = struct{}{}
 		return true
@@ -70,10 +68,10 @@ func HeapAlloc() *Data {
 }
 
 func (s LazySet[T, B]) Range(yield func(T) bool) {
-	if la, ok := s.a.(base.LockableSet[T]); ok {
-		if lb, ok := s.b.(base.LockableSet[T]); ok {
-			la.WithRLock(func(a2 base.SetLike[T]) {
-				lb.WithRLock(func(b2 base.SetLike[T]) {
+	if la, ok := s.a.(set.LockableSet[T]); ok {
+		if lb, ok := s.b.(set.LockableSet[T]); ok {
+			la.WithRLock(func(a2 set.SetLike[T]) {
+				lb.WithRLock(func(b2 set.SetLike[T]) {
 					s.op.Range(a2, b2, yield)
 				})
 			})

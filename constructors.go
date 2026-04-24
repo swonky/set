@@ -16,7 +16,7 @@ func New[T comparable](cap ...int) Set[T] {
 // Collect returns a new Set containing all elements produced by the iterator.
 // If a positive capacity hint is provided, it is used to preallocate the set.
 func Collect[T comparable](it iter.Seq[T], size ...int) Set[T] {
-	s := make(base.Set[T], base.GetCap(size...))
+	s := make(Set[T], base.GetCap(size...))
 	for v := range it {
 		s[v] = struct{}{}
 	}

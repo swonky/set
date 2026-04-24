@@ -1,15 +1,13 @@
 // intersect.go
-package lazyset
+package set
 
 import (
 	"iter"
-
-	"github.com/swonky/set/internal/base"
 )
 
-var _ base.SetLike[int] = Intersection[base.SetLike[int], int]{}
+var _ SetLike[int] = Intersection[SetLike[int], int]{}
 
-func NewIntersection[S base.SetLike[T], T comparable](sets []S) Intersection[S, T] {
+func Intersect[S SetLike[T], T comparable](sets []S) Intersection[S, T] {
 	return Intersection[S, T]{sets: append(make([]S, 0, len(sets)), sets...)}
 }
 
@@ -21,7 +19,7 @@ func (li Intersection[S, T]) sortBySmallest() {
 	}
 }
 
-type Intersection[S base.SetLike[T], T any] struct {
+type Intersection[S SetLike[T], T any] struct {
 	sets []S
 }
 
@@ -57,8 +55,8 @@ func (li Intersection[S, T]) Range(yield func(T) bool) {
 
 	smallest := li.sets[0]
 
-	if ls, ok := any(smallest).(base.LockableSet[T]); ok {
-		ls.WithRLock(func(s base.SetLike[T]) {
+	if ls, ok := any(smallest).(LockableSet[T]); ok {
+		ls.WithRLock(func(s SetLike[T]) {
 			s.Range(fn)
 		})
 		return

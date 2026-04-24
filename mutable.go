@@ -2,6 +2,7 @@ package set
 
 import (
 	"cmp"
+	"iter"
 	"slices"
 )
 
@@ -51,18 +52,32 @@ func Copy[S1 MutableSet[T], S2 SetLike[T], T comparable](dst S1, src S2) {
 	})
 }
 
-func Pop[T any](ms MutableSet[T]) (T, bool) {
+func Consume[MS MutableSet[T], T any](ms MS) iter.Seq[T] {
+	return func(yield func(T) bool) {
+		for {
+			v, ok := Pop(ms)
+			if !ok {
+				return
+			}
+
+			if !yield(v) {
+				return
+			}
+		}
+	}
+}
+
+func Pop[MS MutableSet[T], T any](ms MS) (T, bool) {
 	type result[T any] struct {
 		v  T
 		ok bool
 	}
-	out := op(ms, func(sl SetLike[T]) result[T] {
-		msl := sl.(MutableSet[T])
+	out := WithWrite(ms, func(sl MS) result[T] {
 		var r result[T]
 		for t := range sl.Range {
 			r.v = t
 			r.ok = true
-			msl.Delete(t)
+			sl.Delete(t)
 			return r
 		}
 		return r
@@ -70,14 +85,13 @@ func Pop[T any](ms MutableSet[T]) (T, bool) {
 	return out.v, out.ok
 }
 
-func Clear[T any](s MutableSet[T]) {
-	if s.Len() == 0 {
+func Clear[MS MutableSet[T], T any](ms MS) {
+	if ms.Len() == 0 {
 		return
 	}
-	op(s, func(sl SetLike[T]) struct{} {
-		ms := s
-		sl.Range(func(t T) bool {
-			ms.Delete(t)
+	WithWrite(ms, func(ms2 MS) struct{} {
+		ms2.Range(func(t T) bool {
+			ms2.Delete(t)
 			return true
 		})
 		return struct{}{}

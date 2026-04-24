@@ -4,6 +4,7 @@ import (
 	"iter"
 	"slices"
 
+	"github.com/swonky/set"
 	"github.com/swonky/set/internal/base"
 )
 
@@ -106,7 +107,7 @@ func Collect[T comparable](s iter.Seq[T]) *StableSet[T] {
 	return ss
 }
 
-func FromSetLike[T comparable](s base.SetLike[T]) *StableSet[T] {
+func FromSetLike[T comparable](s set.SetLike[T]) *StableSet[T] {
 	ss := New[T](s.Len())
 	s.Range(func(t T) bool {
 		ss.Add(t)

@@ -1,17 +1,33 @@
 package set
 
-import (
-	"github.com/swonky/set/internal/base"
-	"github.com/swonky/set/lazyset"
-)
+type SetLike[T any] interface {
+	Contains(item T) bool
+	Range(func(T) bool)
+	Len() int
+}
 
-type SetLike[T any] = base.SetLike[T]
-type MutableSet[T any] = base.MutableSet[T]
-type LockableSet[T any] = base.LockableSet[T]
-type ValueSet[T comparable] = base.ValueSet[T]
-type AsSetter[T comparable] = base.AsSetter[T]
+type MutableSet[T any] interface {
+	SetLike[T]
 
-type Set[T comparable] = base.Set[T]
+	Add(T)
+	Delete(T)
+}
 
-type Intersection[S SetLike[T], T any] = lazyset.Intersection[S, T]
-type Union[S SetLike[T], T any] = lazyset.Union[S, T]
+type ValueSet[T comparable] interface {
+	SetLike[T]
+}
+
+type LockableSet[T any] interface {
+	SetLike[T]
+
+	WithRLock(func(SetLike[T]))
+	WithLock(func(MutableSet[T]))
+}
+
+type AsSetter[T comparable] interface {
+	AsSet() Set[T]
+}
+
+type Snapshotable[T any] interface {
+	Snapshot() SetLike[T]
+}

@@ -5,14 +5,15 @@ import (
 	"maps"
 	"sync"
 
+	"github.com/swonky/set"
 	"github.com/swonky/set/internal/base"
 )
 
 var (
-	_ base.SetLike[int]     = (*SyncSet[int])(nil)
-	_ base.MutableSet[int]  = (*SyncSet[int])(nil)
-	_ base.LockableSet[int] = (*SyncSet[int])(nil)
-	_ base.AsSetter[int]    = (*SyncSet[int])(nil)
+	_ set.SetLike[int]     = (*SyncSet[int])(nil)
+	_ set.MutableSet[int]  = (*SyncSet[int])(nil)
+	_ set.LockableSet[int] = (*SyncSet[int])(nil)
+	_ set.AsSetter[int]    = (*SyncSet[int])(nil)
 )
 
 // SyncSet is a concurrency-safe wrapper around Set.
@@ -20,7 +21,7 @@ var (
 // Iteration holds a read lock for the duration of the sequence.
 type SyncSet[T comparable] struct {
 	mu     sync.RWMutex
-	values base.Set[T]
+	values set.Set[T]
 }
 
 // New
@@ -49,41 +50,41 @@ func Collect[T comparable](seq iter.Seq[T]) *SyncSet[T] {
 }
 
 // Clone
-func (ss *SyncSet[T]) Clone() *SyncSet[T] {
-	ss.mu.RLock()
-	defer ss.mu.RUnlock()
-	return &SyncSet[T]{values: maps.Clone(ss.values)}
+func (s *SyncSet[T]) Clone() *SyncSet[T] {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	return &SyncSet[T]{values: maps.Clone(s.values)}
 }
 
 // Len returns the number of elements in the set.
-func (ss *SyncSet[T]) Len() int {
-	ss.mu.RLock()
-	n := len(ss.values)
-	ss.mu.RUnlock()
+func (s *SyncSet[T]) Len() int {
+	s.mu.RLock()
+	n := len(s.values)
+	s.mu.RUnlock()
 	return n
 }
 
 // Contains reports whether item exists in the set.
-func (ss *SyncSet[T]) Contains(item T) bool {
-	ss.mu.RLock()
-	_, ok := ss.values[item]
-	ss.mu.RUnlock()
+func (s *SyncSet[T]) Contains(item T) bool {
+	s.mu.RLock()
+	_, ok := s.values[item]
+	s.mu.RUnlock()
 	return ok
 }
 
 // Add inserts item into the set.
-func (ss *SyncSet[T]) Add(item T) {
-	ss.mu.Lock()
-	ss.values[item] = struct{}{}
-	ss.mu.Unlock()
+func (s *SyncSet[T]) Add(item T) {
+	s.mu.Lock()
+	s.values[item] = struct{}{}
+	s.mu.Unlock()
 }
 
 // Delete removes item from the set.
-func (ss *SyncSet[T]) Delete(item T) {
-	ss.mu.RLock()
-	defer ss.mu.RUnlock()
+func (s *SyncSet[T]) Delete(item T) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
 
-	delete(ss.values, item)
+	delete(s.values, item)
 }
 
 // Range implements iter.Seq.
@@ -113,7 +114,7 @@ func (s *SyncSet[T]) Range(yield func(T) bool) {
 //
 // Use [SyncSet.WithRWLock] when write operations are required.
 // Use [SyncSet.Range] when only element iteration is required.
-func (s *SyncSet[T]) WithRLock(fn func(base.SetLike[T])) {
+func (s *SyncSet[T]) WithRLock(fn func(set.SetLike[T])) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	fn(s.values)
@@ -127,15 +128,15 @@ func (s *SyncSet[T]) WithRLock(fn func(base.SetLike[T])) {
 //
 // Use [SyncSet.WithRLock] when only read operations are required.
 // Use [SyncSet.Range] when only element iteration is required.
-func (s *SyncSet[T]) WithLock(fn func(base.Set[T])) {
+func (s *SyncSet[T]) WithLock(fn func(set.MutableSet[T])) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	fn(s.values)
 }
 
-func (ss *SyncSet[T]) AsSet() base.Set[T] {
-	ss.mu.RLock()
-	defer ss.mu.RUnlock()
+func (s *SyncSet[T]) AsSet() set.Set[T] {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
 
-	return maps.Clone(ss.values)
+	return maps.Clone(s.values)
 }
