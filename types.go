@@ -17,11 +17,11 @@ type ValueSet[T comparable] interface {
 	SetLike[T]
 }
 
-type LockableSet[T any] interface {
+type LockableSet[MS MutableSet[T], T any] interface {
 	SetLike[T]
 
 	WithRLock(func(SetLike[T]))
-	WithLock(func(MutableSet[T]))
+	WithLock(func(MS))
 }
 
 type AsSetter[T comparable] interface {

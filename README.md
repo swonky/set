@@ -12,17 +12,18 @@ Writing a set is simple. Writing one that behaves well around the compiler, allo
 
 ## Features
 
-- Multiple generic set implementations with shared APIs:
-  - `set.Set[T]` — general-purpose mutable hash set
-  - `frozenset.FrozenSet[T]` — immutable read-optimized set
-  - `syncset.SyncSet[T]` — concurrency-safe mutable set
-  - `stableset.StableSet[T]` — insertion-ordered set with stable iteration
-  - `keyedset.KeyedSet[T]` — keyed set for non-comparable values
+- Generic set implementations:
+  - `set.Set[T]` — general-purpose mutable hash set.
+  - `frozenset.FrozenSet[T]` — immutable read-optimized set.
+  - `syncset.SyncSet[T]` — concurrency-safe mutable set.
+  - `stableset.StableSet[T]` — insertion-ordered set with stable iteration.
+  - `keyedset.KeyedSet[T]` — keyed set for non-comparable values.
+- Optimised typed set implementations:
+  - `bitset.BitSet` - mutable set of non-negative integers.
 - Common interfaces (`set.SetLike[T]`, `set.MutableSet[T]`) for interoperability across implementations.
-- Standard-library-style set operations including diff, union, intersection, symmetric difference, filtering, transforms, equality checks, predicates, and selection helpers.
+- Standard-library-style set operations including `Diff`/`SymmDiff`, `Union`, `Intersect`, `Filter`, `Transform`, and [more...]()
 - Lazy set views for union and intersection to avoid unnecessary materialization.
-- Generic constructors and conversions: `New`, `FromSlice`, `FromSetLike`, `Collect`.
-- Allocation-conscious implementations designed for practical workloads and hot paths.
+- Generic constructor and convertor functions: `New`, `FromSlice`, `FromSetLike`, `Collect`.
 - Go 1.22+ iterator support via `iter.Seq`.
 
 ## Install
