@@ -2,7 +2,6 @@ package syncset
 
 import (
 	"iter"
-	"maps"
 	"sync"
 
 	"github.com/swonky/set"
@@ -10,29 +9,28 @@ import (
 )
 
 var (
-	_ set.SetLike[int]     = (*SyncSet[int])(nil)
-	_ set.MutableSet[int]  = (*SyncSet[int])(nil)
-	_ set.LockableSet[int] = (*SyncSet[int])(nil)
-	_ set.AsSetter[int]    = (*SyncSet[int])(nil)
+	_ set.SetLike[int]                   = (*SyncSet[set.Set[int], int])(nil)
+	_ set.MutableSet[int]                = (*SyncSet[set.Set[int], int])(nil)
+	_ set.LockableSet[set.Set[int], int] = (*SyncSet[set.Set[int], int])(nil)
 )
 
 // SyncSet is a concurrency-safe wrapper around Set.
 // All operations are guarded by a RWMutex.
 // Iteration holds a read lock for the duration of the sequence.
-type SyncSet[T comparable] struct {
+type SyncSet[S set.SetLike[T], T comparable] struct {
 	mu     sync.RWMutex
-	values set.Set[T]
+	values S
 }
 
 // New
-func New[T comparable](cap ...int) *SyncSet[T] {
-	return &SyncSet[T]{
+func New[T comparable](cap ...int) *SyncSet[set.Set[T], T] {
+	return &SyncSet[set.Set[T], T]{
 		values: make(map[T]struct{}, base.GetCap(cap...)),
 	}
 }
 
 // From
-func From[T comparable](elems ...T) *SyncSet[T] {
+func From[T comparable](elems ...T) *SyncSet[set.Set[T], T] {
 	s := New[T](len(elems))
 	for _, t := range elems {
 		s.values[t] = struct{}{}
@@ -41,7 +39,7 @@ func From[T comparable](elems ...T) *SyncSet[T] {
 }
 
 // Collect
-func Collect[T comparable](seq iter.Seq[T]) *SyncSet[T] {
+func Collect[T comparable](seq iter.Seq[T]) *SyncSet[set.Set[T], T] {
 	s := New[T]()
 	for t := range seq {
 		s.values[t] = struct{}{}
@@ -49,42 +47,34 @@ func Collect[T comparable](seq iter.Seq[T]) *SyncSet[T] {
 	return s
 }
 
-// Clone
-func (s *SyncSet[T]) Clone() *SyncSet[T] {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-	return &SyncSet[T]{values: maps.Clone(s.values)}
-}
-
 // Len returns the number of elements in the set.
-func (s *SyncSet[T]) Len() int {
+func (s *SyncSet[S, T]) Len() int {
 	s.mu.RLock()
-	n := len(s.values)
+	n := s.values.Len()
 	s.mu.RUnlock()
 	return n
 }
 
 // Contains reports whether item exists in the set.
-func (s *SyncSet[T]) Contains(item T) bool {
+func (s *SyncSet[S, T]) Contains(item T) bool {
 	s.mu.RLock()
-	_, ok := s.values[item]
+	ok := s.values.Contains(item)
 	s.mu.RUnlock()
 	return ok
 }
 
 // Add inserts item into the set.
-func (s *SyncSet[T]) Add(item T) {
+func (s *SyncSet[S, T]) Add(item T) {
 	s.mu.Lock()
-	s.values[item] = struct{}{}
+	s.values.Add(item)
 	s.mu.Unlock()
 }
 
 // Delete removes item from the set.
-func (s *SyncSet[T]) Delete(item T) {
+func (s *SyncSet[S, T]) Delete(item T) {
 	s.mu.RLock()
-	defer s.mu.RUnlock()
-
-	delete(s.values, item)
+	s.values.Delete(item)
+	s.mu.RUnlock()
 }
 
 // Range implements iter.Seq.
@@ -95,15 +85,10 @@ func (s *SyncSet[T]) Delete(item T) {
 //
 // Use [SyncSet.WithRLock] for non-iterative read operations or when multiple reads
 // should be performed while holding a single lock.
-func (s *SyncSet[T]) Range(yield func(T) bool) {
+func (s *SyncSet[S, T]) Range(yield func(T) bool) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-
-	for k := range s.values {
-		if !yield(k) {
-			return
-		}
-	}
+	s.values.Range(func(t T) bool { return yield(t) })
 }
 
 // WithRLock calls fn while holding a read lock and passes a temporary
@@ -114,7 +99,7 @@ func (s *SyncSet[T]) Range(yield func(T) bool) {
 //
 // Use [SyncSet.WithRWLock] when write operations are required.
 // Use [SyncSet.Range] when only element iteration is required.
-func (s *SyncSet[T]) WithRLock(fn func(set.SetLike[T])) {
+func (s *SyncSet[S, T]) WithRLock(fn func(set.SetLike[T])) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	fn(s.values)
@@ -128,15 +113,8 @@ func (s *SyncSet[T]) WithRLock(fn func(set.SetLike[T])) {
 //
 // Use [SyncSet.WithRLock] when only read operations are required.
 // Use [SyncSet.Range] when only element iteration is required.
-func (s *SyncSet[T]) WithLock(fn func(set.MutableSet[T])) {
+func (s *SyncSet[S, T]) WithLock(fn func(S)) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	fn(s.values)
-}
-
-func (s *SyncSet[T]) AsSet() set.Set[T] {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-
-	return maps.Clone(s.values)
 }
