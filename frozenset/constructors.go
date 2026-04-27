@@ -6,6 +6,7 @@ import (
 
 	"github.com/swonky/set"
 	"github.com/swonky/set/internal/base"
+	"github.com/swonky/set/types"
 )
 
 func New[T comparable](cap ...int) FrozenSet[T] {
@@ -20,7 +21,7 @@ func Collect[T comparable](seq iter.Seq[T]) FrozenSet[T] {
 	return s
 }
 
-func Consume[S set.MutableSet[T], T comparable](s S) FrozenSet[T] {
+func Consume[S types.MutableSet[T], T comparable](s S) FrozenSet[T] {
 	fs := New[T](s.Len())
 	for {
 		if val, ok := set.Pop(s); ok {
@@ -32,7 +33,7 @@ func Consume[S set.MutableSet[T], T comparable](s S) FrozenSet[T] {
 	return fs
 }
 
-func FromSetLike[S set.SetLike[T], T comparable](s S) FrozenSet[T] {
+func FromSetLike[S types.SetLike[T], T comparable](s S) FrozenSet[T] {
 	switch v := any(s).(type) {
 	case set.Set[T]:
 		return FrozenSet[T]{values: maps.Clone(v)}

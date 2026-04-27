@@ -4,10 +4,10 @@ import (
 	"maps"
 
 	"github.com/swonky/set"
+	"github.com/swonky/set/types"
 )
 
-var _ set.SetLike[int] = FrozenSet[int]{}
-var _ set.AsSetter[int] = FrozenSet[int]{}
+var _ types.SetLike[int] = FrozenSet[int]{}
 
 type FrozenSet[T comparable] struct {
 	values map[T]struct{}

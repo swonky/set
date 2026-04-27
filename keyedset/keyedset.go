@@ -5,9 +5,10 @@ import (
 
 	"github.com/swonky/set"
 	"github.com/swonky/set/internal/base"
+	"github.com/swonky/set/types"
 )
 
-var _ set.SetLike[Keyed] = KeyedSet[Keyed]{}
+var _ types.SetLike[Keyed] = KeyedSet[Keyed]{}
 
 type Keyed interface{ Key() uint64 }
 
@@ -41,6 +42,10 @@ func New[T Keyed](cap ...int) KeyedSet[T] {
 	return WithCustom(defaultKeyFunc[T], cap[0])
 }
 
+func NewSync[T Keyed](cap ...int) *set.SyncSet[T] {
+	return set.Wrap(New[T](cap...))
+}
+
 func FromSlice[S ~[]T, T Keyed](elems S) KeyedSet[T] {
 	return FromWithCustom(defaultKeyFunc[T], elems)
 }
@@ -63,7 +68,7 @@ func (ks KeyedSet[T]) Clone() KeyedSet[T] {
 	return KeyedSet[T]{smap: maps.Clone(ks.smap), fn: ks.fn}
 }
 
-// -- SetLike[T] operations --
+// -- types.SetLike[T] operations --
 
 // Contains returns true if there is an entry matching the element's key.
 func (ks KeyedSet[T]) Contains(elem T) bool {
@@ -88,7 +93,7 @@ func (ks KeyedSet[T]) Range(yield func(T) bool) {
 	}
 }
 
-// -- MutableSet[T] operations --
+// -- types.MutableSet[T] operations --
 
 // Add inserts an element into the set
 func (ks KeyedSet[T]) Add(elem T) {

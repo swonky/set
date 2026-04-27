@@ -1,5 +1,25 @@
 package set_test
 
+import (
+	"testing"
+
+	"github.com/swonky/set"
+	"github.com/swonky/set/syncset"
+)
+
+func TestCasting(t *testing.T) {
+	ss := syncset.New[int](10)
+	set.Add(ss, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+	if _, ok := any(ss).(set.LockableSet[set.Set[int], int]); !ok {
+		t.Fatalf("ss is not a set.LockableSet[set.Set[int], int]")
+	}
+	if _, ok := any(ss).(set.LockableSet[set.MutableSet[int], int]); !ok {
+		t.Fatalf("ss is not a set.LockableSet[set.MutableSet[int], int]")
+	}
+
+}
+
 // import (
 // 	"iter"
 // 	"testing"
@@ -38,24 +58,24 @@ package set_test
 // 	}
 // }
 
-// func asSetLike[T comparable](xs []set.Set[T]) []set.SetLike[T] {
-// 	out := make([]set.SetLike[T], len(xs))
+// func asSetLike[T comparable](xs []set.Set[T]) []types.SetLike[T] {
+// 	out := make([]types.SetLike[T], len(xs))
 // 	for i := range xs {
 // 		out[i] = xs[i]
 // 	}
 // 	return out
 // }
 
-// func frozenAsSetLike[T comparable](xs []set.FrozenSet[T]) []set.SetLike[T] {
-// 	out := make([]set.SetLike[T], len(xs))
+// func frozenAsSetLike[T comparable](xs []set.FrozenSet[T]) []types.SetLike[T] {
+// 	out := make([]types.SetLike[T], len(xs))
 // 	for i := range xs {
 // 		out[i] = xs[i]
 // 	}
 // 	return out
 // }
 
-// func syncAsSetLike[T comparable](xs []*set.SyncSet[T]) []set.SetLike[T] {
-// 	out := make([]set.SetLike[T], len(xs))
+// func syncAsSetLike[T comparable](xs []*set.SyncSet[T]) []types.SetLike[T] {
+// 	out := make([]types.SetLike[T], len(xs))
 // 	for i := range xs {
 // 		out[i] = xs[i]
 // 	}

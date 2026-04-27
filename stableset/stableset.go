@@ -6,6 +6,12 @@ import (
 
 	"github.com/swonky/set"
 	"github.com/swonky/set/internal/base"
+	"github.com/swonky/set/types"
+)
+
+var (
+	_ types.SetLike[int]    = (*StableSet[int])(nil)
+	_ types.MutableSet[int] = (*StableSet[int])(nil)
 )
 
 type StableSet[T comparable] struct {
@@ -99,6 +105,10 @@ func New[T comparable](cap ...int) *StableSet[T] {
 	return ss
 }
 
+func NewSync[T comparable](cap ...int) *set.SyncSet[T] {
+	return set.Wrap(New[T](cap...))
+}
+
 func Collect[T comparable](s iter.Seq[T]) *StableSet[T] {
 	ss := New[T]()
 	for v := range s {
@@ -107,7 +117,7 @@ func Collect[T comparable](s iter.Seq[T]) *StableSet[T] {
 	return ss
 }
 
-func FromSetLike[T comparable](s set.SetLike[T]) *StableSet[T] {
+func FromSetLike[T comparable](s types.SetLike[T]) *StableSet[T] {
 	ss := New[T](s.Len())
 	s.Range(func(t T) bool {
 		ss.Add(t)

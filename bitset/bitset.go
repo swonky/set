@@ -3,10 +3,10 @@ package bitset
 import (
 	"math/bits"
 
-	"github.com/swonky/set"
+	"github.com/swonky/set/types"
 )
 
-var _ set.MutableSet[int] = (*BitSet[int])(nil)
+var _ types.MutableSet[int] = (*BitSet[int])(nil)
 
 type numbers interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint16 | ~uint32 | ~uint64

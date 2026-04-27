@@ -2,6 +2,8 @@ package set
 
 import (
 	"iter"
+
+	"github.com/swonky/set/types"
 )
 
 // AccumulateTry returns an iterator of intermediate accumulation results.
@@ -10,7 +12,7 @@ import (
 // Iteration also stops if the consumer stops early.
 // For zero sets, a single zero value is yielded.
 // For one set, no values are yielded.
-func AccumulateTry[T comparable, S SetLike[T]](
+func AccumulateTry[T comparable, S types.SetLike[T]](
 	sets []S,
 	fn func(a, b S) (S, bool),
 ) iter.Seq[S] {
@@ -38,7 +40,7 @@ func AccumulateTry[T comparable, S SetLike[T]](
 // Iteration stops if the consumer stops early.
 // For zero sets, a single zero value is yielded.
 // For one set, no values are yielded.
-func Accumulate[T comparable, S SetLike[T]](
+func Accumulate[T comparable, S types.SetLike[T]](
 	sets []S,
 	fn func(a, b S) S,
 ) iter.Seq[S] {
@@ -61,7 +63,7 @@ func Accumulate[T comparable, S SetLike[T]](
 // ReduceTry reduces sets using fn, stopping early if fn returns false.
 // The result of the step that signalled stop is returned as the final value.
 // If no sets are provided, a zero value is returned.
-func ReduceTry[T comparable, S SetLike[T]](
+func ReduceTry[T comparable, S types.SetLike[T]](
 	sets []S,
 	fn func(a, b S) (S, bool),
 ) S {
@@ -85,7 +87,7 @@ func ReduceTry[T comparable, S SetLike[T]](
 // ReduceWhile reduces sets using fn, stopping when pred returns false for a result.
 // The last result that passes pred is returned.
 // If no sets are provided, a zero value is returned.
-func ReduceWhile[T comparable, S SetLike[T]](
+func ReduceWhile[T comparable, S types.SetLike[T]](
 	sets []S,
 	fn func(a, b S) S,
 	pred func(s S) bool,
@@ -109,7 +111,7 @@ func ReduceWhile[T comparable, S SetLike[T]](
 // ReduceUntil reduces sets using fn, stopping when pred returns true for a result.
 // The first result that passes pred is returned.
 // If no sets are provided, a zero value is returned.
-func ReduceUntil[T comparable, S SetLike[T]](
+func ReduceUntil[T comparable, S types.SetLike[T]](
 	sets []S,
 	fn func(a, b S) S,
 	pred func(s S) bool,
@@ -133,7 +135,7 @@ func ReduceUntil[T comparable, S SetLike[T]](
 // Reduce reduces sets by applying fn pairwise from left to right.
 // The final accumulated value is returned.
 // If no sets are provided, a zero value is returned.
-func Reduce[T comparable, S SetLike[T]](
+func Reduce[T comparable, S types.SetLike[T]](
 	sets []S,
 	fn func(a, b S) S,
 ) S {

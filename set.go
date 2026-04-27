@@ -6,13 +6,16 @@ import (
 	"maps"
 	"slices"
 	"strings"
+
+	"github.com/swonky/set/types"
 )
 
-var _ SetLike[int] = Set[int]{}
-var _ MutableSet[int] = (*Set[int])(nil)
+var _ types.SetLike[int] = Set[int]{}
+var _ types.MutableSet[int] = (*Set[int])(nil)
 
 // Set[T] represents a mathematical set of comparable elements.
-// The zero value is ready to use but prefer using New() for initialization.
+//
+// The zero value is ready to use but prefer using [make] or [New] for initialization.
 type Set[T comparable] map[T]struct{}
 
 // Union returns a new set containing all elements from s and o.

@@ -1,21 +1,24 @@
 package lazyset
 
-import "github.com/swonky/set"
+import (
+	"github.com/swonky/set"
+	"github.com/swonky/set/types"
+)
 
-var _ set.SetLike[int] = LazySet[int, BinaryOp[int]]{}
+var _ types.SetLike[int] = LazySet[int, BinaryOp[int]]{}
 
 type BinaryOp[T any] interface {
-	Range(a, b set.SetLike[T], yield func(T) bool)
-	Contains(a, b set.SetLike[T], elem T) bool
+	Range(a, b types.SetLike[T], yield func(T) bool)
+	Contains(a, b types.SetLike[T], elem T) bool
 }
 
 type LazySet[T comparable, B BinaryOp[T]] struct {
-	a, b set.SetLike[T]
+	a, b types.SetLike[T]
 	op   B
 }
 
 func New[T comparable, B BinaryOp[T]](
-	sets []set.SetLike[T],
+	sets []types.SetLike[T],
 	op B,
 ) *LazySet[T, B] {
 	if len(sets) == 1 {
@@ -68,10 +71,10 @@ func HeapAlloc() *Data {
 }
 
 func (s LazySet[T, B]) Range(yield func(T) bool) {
-	if la, ok := s.a.(set.LockableSet[T]); ok {
-		if lb, ok := s.b.(set.LockableSet[T]); ok {
-			la.WithRLock(func(a2 set.SetLike[T]) {
-				lb.WithRLock(func(b2 set.SetLike[T]) {
+	if la, ok := s.a.(types.LockableSet[T]); ok {
+		if lb, ok := s.b.(types.LockableSet[T]); ok {
+			la.WithRLock(func(a2 types.SetLike[T]) {
+				lb.WithRLock(func(b2 types.SetLike[T]) {
 					s.op.Range(a2, b2, yield)
 				})
 			})

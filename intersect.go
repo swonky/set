@@ -3,29 +3,32 @@ package set
 
 import (
 	"iter"
+
+	"github.com/swonky/set/types"
 )
 
-var _ SetLike[int] = Intersection[SetLike[int], int]{}
+var _ types.SetLike[int] = Intersection[int]{}
 
-func Intersect[S SetLike[T], T comparable](sets []S) Intersection[S, T] {
-	return Intersection[S, T]{sets: append(make([]S, 0, len(sets)), sets...)}
+// func Intersect[S types.SetLike[T], T comparable](sets []S) Intersection[T] {
+func Intersect[S types.SetLike[T], T comparable](sets ...S) Intersection[T] {
+	return Intersection[T]{sets: append(make([]types.SetLike[T], 0, len(sets)), any(sets).([]types.SetLike[T])...)}
 }
 
-func (li Intersection[S, T]) sortBySmallest() {
-	for i := 1; i < len(li.sets); i++ {
-		for j := i; j > 0 && (li.sets[j].Len() < li.sets[j-1].Len()); j-- {
-			li.sets[j], li.sets[j-1] = li.sets[j-1], li.sets[j]
+func (is Intersection[T]) sortBySmallest() {
+	for i := 1; i < len(is.sets); i++ {
+		for j := i; j > 0 && (is.sets[j].Len() < is.sets[j-1].Len()); j-- {
+			is.sets[j], is.sets[j-1] = is.sets[j-1], is.sets[j]
 		}
 	}
 }
 
-type Intersection[S SetLike[T], T any] struct {
-	sets []S
+type Intersection[T any] struct {
+	sets []types.SetLike[T]
 }
 
-func (li Intersection[S, T]) Sets() iter.Seq[S] {
-	return func(yield func(S) bool) {
-		for _, s := range li.sets {
+func (is Intersection[T]) Sets() iter.Seq[types.SetLike[T]] {
+	return func(yield func(types.SetLike[T]) bool) {
+		for _, s := range is.sets {
 			if !yield(s) {
 				return
 			}
@@ -33,19 +36,19 @@ func (li Intersection[S, T]) Sets() iter.Seq[S] {
 	}
 }
 
-func (li Intersection[S, T]) Range(yield func(T) bool) {
-	switch len(li.sets) {
+func (is Intersection[T]) Range(yield func(T) bool) {
+	switch len(is.sets) {
 	case 0:
 		return
 	case 1:
-		li.sets[0].Range(yield)
+		is.sets[0].Range(yield)
 		return
 	}
 
-	li.sortBySmallest()
+	is.sortBySmallest()
 
 	fn := func(elem T) bool {
-		for _, s := range li.sets[1:] {
+		for _, s := range is.sets[1:] {
 			if !s.Contains(elem) {
 				return true
 			}
@@ -53,10 +56,10 @@ func (li Intersection[S, T]) Range(yield func(T) bool) {
 		return yield(elem)
 	}
 
-	smallest := li.sets[0]
+	smallest := is.sets[0]
 
-	if ls, ok := any(smallest).(LockableSet[T]); ok {
-		ls.WithRLock(func(s SetLike[T]) {
+	if ls, ok := any(smallest).(types.LockableSet[T]); ok {
+		ls.WithRLock(func(s types.SetLike[T]) {
 			s.Range(fn)
 		})
 		return
@@ -64,8 +67,8 @@ func (li Intersection[S, T]) Range(yield func(T) bool) {
 	smallest.Range(fn)
 }
 
-func (li Intersection[S, T]) Contains(elem T) bool {
-	for _, s := range li.sets {
+func (is Intersection[T]) Contains(elem T) bool {
+	for _, s := range is.sets {
 		if !s.Contains(elem) {
 			return false
 		}
@@ -73,9 +76,9 @@ func (li Intersection[S, T]) Contains(elem T) bool {
 	return true
 }
 
-func (li Intersection[S, T]) Len() int {
+func (is Intersection[T]) Len() int {
 	n := 0
-	li.Range(func(T) bool {
+	is.Range(func(T) bool {
 		n++
 		return true
 	})

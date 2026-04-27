@@ -20,7 +20,7 @@ Writing a set is simple. Writing one that behaves well around the compiler, allo
   - `keyedset.KeyedSet[T]` — keyed set for non-comparable values.
 - Optimised typed set implementations:
   - `bitset.BitSet` - mutable set of non-negative integers.
-- Common interfaces (`set.SetLike[T]`, `set.MutableSet[T]`) for interoperability across implementations.
+- Common interfaces (`types.SetLike[T]`, `types.MutableSet[T]`) for interoperability across implementations.
 - Standard-library-style set operations including `Diff`/`SymmDiff`, `Union`, `Intersect`, `Filter`, `Transform`, and [more...]()
 - Lazy set views for union and intersection to avoid unnecessary materialization.
 - Generic constructor and convertor functions: `New`, `FromSlice`, `FromSetLike`, `Collect`.

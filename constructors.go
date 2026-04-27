@@ -5,12 +5,21 @@ import (
 	"maps"
 
 	"github.com/swonky/set/internal/base"
+	"github.com/swonky/set/types"
 )
 
-// New returns a new Set with a .
-// If no items are provided, it returns an empty set.
+// New returns a new [Set].
+// cap optionally specifies the initial capacity. If multiple values are
+// provided, only the first is used.
 func New[T comparable](cap ...int) Set[T] {
 	return make(Set[T], base.GetCap(cap...))
+}
+
+// NewSync returns a new [SyncSet] backed by a builtin [Set].
+//
+// It is equivalent to [Wrap]([New][T](cap...)).
+func NewSync[T comparable](cap ...int) *SyncSet[T] {
+	return &SyncSet[T]{values: New[T](cap...)}
 }
 
 // Collect returns a new Set containing all elements produced by the iterator.
@@ -23,12 +32,9 @@ func Collect[T comparable](it iter.Seq[T], size ...int) Set[T] {
 	return s
 }
 
-func FromSetLike[T comparable](s SetLike[T]) Set[T] {
-	switch e := s.(type) {
-	case Set[T]:
+func FromSetLike[T comparable](s types.SetLike[T]) Set[T] {
+	if e, ok := s.(Set[T]); ok {
 		return maps.Clone(e)
-	case AsSetter[T]:
-		return e.AsSet()
 	}
 	r := make(map[T]struct{}, s.Len())
 	for v := range s.Range {

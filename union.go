@@ -1,10 +1,12 @@
 package set
 
-func Unite[S SetLike[T], T comparable](sets ...S) Union[S, T] {
+import "github.com/swonky/set/types"
+
+func Unite[S types.SetLike[T], T comparable](sets ...S) Union[S, T] {
 	return Union[S, T]{sets: append(make([]S, 0, len(sets)), sets...)}
 }
 
-type Union[S SetLike[T], T any] struct {
+type Union[S types.SetLike[T], T any] struct {
 	sets []S
 }
 
